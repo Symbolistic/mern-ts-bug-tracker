@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans:400,500,700|Rozha+One');
+
+@import 'Variables';
+@import 'Global';
+@import './components/LoginRegister/LoginRegister';
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: $textFont, sans-serif;
+	width: 100%;
+	height: 100vh;
+	overflow-x: hidden;
+	background: #fff;
+}
