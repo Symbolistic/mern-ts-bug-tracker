@@ -39,7 +39,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 function useAuthContext() {
 	const context = React.useContext(AuthContext);
 	if (context === undefined) {
-		throw new Error('useCountState must be used within a CountProvider');
+		throw new Error('useAuthContext must be used within a AuthProvider');
 	}
 	return context;
 }

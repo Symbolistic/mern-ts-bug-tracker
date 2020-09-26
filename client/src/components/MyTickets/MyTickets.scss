@@ -1,0 +1,65 @@
+#MyTickets {
+	height: 100%;
+	.main-area {
+		.header {
+			margin-bottom: 20px;
+			border-bottom: 1px solid $black;
+
+			button {
+				border: 2px solid $black;
+				background: none;
+				padding: 10px 25px;
+				font-size: 14px;
+				color: $black;
+				cursor: pointer;
+				transition: 0.8s;
+				border-radius: 20px;
+				&:hover {
+					color: $black !important;
+					background: #f6b93b;
+					transition: all 0.7s ease 0s;
+				}
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+		.ticket-card {
+			text-align: center;
+			padding: 10px;
+			border: 1px solid black;
+			max-height: 180px;
+			overflow: hidden;
+			-webkit-transition: max-height 0.8s;
+			-moz-transition: max-height 0.8s;
+			transition: max-height 1.2s;
+
+			.ticket-btns {
+				display: flex;
+				flex-direction: column;
+
+				button {
+					border: 2px solid $black;
+					background: none;
+					padding: 10px 25px;
+					margin: 5px;
+					font-size: 14px;
+					color: $black;
+					cursor: pointer;
+					transition: 0.8s;
+					&:hover {
+						color: $black !important;
+						background: #f6b93b;
+						transition: all 0.7s ease 0s;
+					}
+					&:focus {
+						outline: none;
+					}
+				}
+			}
+			&:hover {
+				max-height: 1200px;
+			}
+		}
+	}
+}

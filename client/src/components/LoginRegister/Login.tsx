@@ -71,6 +71,12 @@ export const Login: React.FC<IUser> = (props) => {
 							<div className='password error'></div>
 							<button>Login</button>
 						</form>
+
+						<div className='options'>
+							<p>
+								Create an account? <a href='/register'>Sign Up</a>
+							</p>
+						</div>
 					</Grid>
 				</Grid>
 			</Container>

@@ -5,7 +5,7 @@ body {
 h2 {
 	font-family: $displayFont;
 	font-size: 3rem;
-	margin: 0.5rem 0 3rem;
+	margin: 0.5rem 0 0.8rem;
 	text-transform: capitalize;
 	color: $black;
 }
@@ -22,14 +22,15 @@ p {
 	font-size: 0.8rem;
 	color: $paragraphColor;
 	line-height: 2;
-	margin: 0.5rem 0 3rem;
+	margin: 0.5rem 0 2rem;
 	font-weight: 300;
 }
 
 a {
+	text-decoration: none;
 	transition: all 0.5s ease-in-out;
 	&:hover {
-		color: $red;
+		color: burlywood;
 	}
 }
 

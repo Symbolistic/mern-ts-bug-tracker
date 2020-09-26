@@ -52,7 +52,14 @@ export default {
 			.then((data) => data);
 	},
 	logout: () => {
-		return fetch('/api/users/logout')
+		return fetch('http://localhost:8000/logout', {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		})
 			.then((res) => res.json())
 			.then((data) => data);
 	},

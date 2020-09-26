@@ -114,7 +114,7 @@ const logout_get = (req: Request, res: Response) => {
 	// This will replace the logged in JWT Token with a blank one that expires in 1 millisecond
 	// Basically this will log them out and delete the cookie
 	res.cookie('jwt', '', { maxAge: 1 });
-	res.redirect('/');
+	res.status(200).json({ user: '', isAuthenticated: false });
 };
 
 const authenticated = (req: Request, res: Response) => {

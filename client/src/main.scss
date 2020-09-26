@@ -3,6 +3,11 @@
 @import 'Variables';
 @import 'Global';
 @import './components/LoginRegister/LoginRegister';
+@import './components/Dashboard/Dashboard.scss';
+@import './components/Navbar/Navbar.scss';
+@import './components/Sidebar/Sidebar.scss';
+@import './components/MyProjects/MyProjects.scss';
+@import './components/MyTickets/MyTickets.scss';
 
 * {
 	box-sizing: border-box;

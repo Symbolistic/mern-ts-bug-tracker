@@ -1,0 +1,31 @@
+#Sidebar {
+	position: relative;
+	background-color: $black;
+	color: #ffff;
+	min-height: 85vh;
+	height: 110%;
+	box-shadow: 1px 1px 5px $black;
+
+	.nav {
+		display: block;
+		text-align: center;
+		list-style: none;
+		padding: 20px 0;
+	}
+
+	.nav-item {
+		padding: 40px 0;
+		color: white;
+		text-decoration: none;
+		&:hover {
+			background-color: #f6b93b;
+			transition: ease-in-out 0.4s;
+		}
+	}
+}
+
+@media only screen and (max-width: 959px) {
+	#Sidebar {
+		display: none;
+	}
+}

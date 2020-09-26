@@ -1,0 +1,23 @@
+#Dashboard {
+	height: 100vh;
+	width: 100%;
+
+	.main-area {
+		padding: 30px;
+	}
+
+	.chart-card {
+		border: 1px solid black;
+
+		.chart {
+			text-align: center;
+			padding: 50px;
+		}
+
+		h3 {
+			background-color: $greyBG;
+			text-align: center;
+			padding: 10px;
+		}
+	}
+}

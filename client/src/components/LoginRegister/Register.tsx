@@ -73,6 +73,12 @@ export const Register: React.FC<IUser> = (props) => {
 							/>
 							<button>Register</button>
 						</form>
+
+						<div className='options'>
+							<p>
+								Already have an account? <a href='/login'>Log In</a>
+							</p>
+						</div>
 					</Grid>
 				</Grid>
 			</Container>
