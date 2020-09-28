@@ -1,12 +1,19 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
-interface Props {}
+interface IProjects extends RouteComponentProps<any> {}
 
-export const MyProjects: React.FC<Props> = () => {
+export const MyProjects: React.FC<IProjects> = (props) => {
+	const handleProjectDetails = (event: any) => {
+		event.preventDefault();
+
+		props.history.push('/projectdetails');
+	};
+
 	return (
 		<div id='MyProjects'>
 			<Navbar />
@@ -31,7 +38,7 @@ export const MyProjects: React.FC<Props> = () => {
 
 									<div className='project-btns'>
 										<button>Manage Users</button>
-										<button>Details</button>
+										<button onClick={handleProjectDetails}>Details</button>
 									</div>
 								</div>
 							</Grid>

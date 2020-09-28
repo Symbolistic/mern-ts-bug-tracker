@@ -7,7 +7,11 @@
 @import './components/Navbar/Navbar.scss';
 @import './components/Sidebar/Sidebar.scss';
 @import './components/MyProjects/MyProjects.scss';
+@import './components/ProjectDetails/ProjectDetails.scss';
 @import './components/MyTickets/MyTickets.scss';
+@import './components/TicketDetails/TicketDetails.scss';
+@import './components/EditTicket/EditTicket.scss';
+@import './components/Modals/Modal.scss';
 
 * {
 	box-sizing: border-box;
@@ -19,6 +23,6 @@ body {
 	font-family: $textFont, sans-serif;
 	width: 100%;
 	height: 100vh;
-	overflow-x: hidden;
+	overflow-x: hidden !important;
 	background: #fff;
 }

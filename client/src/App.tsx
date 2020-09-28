@@ -6,7 +6,11 @@ import { Login } from './components/LoginRegister/Login';
 import { Register } from './components/LoginRegister/Register';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { MyProjects } from './components/MyProjects/MyProjects';
+import { EditProject } from './components/EditProject/EditProject';
+import { ProjectDetails } from './components/ProjectDetails/ProjectDetails';
 import { MyTickets } from './components/MyTickets/MyTickets';
+import { EditTicket } from './components/EditTicket/EditTicket';
+import { TicketDetails } from './components/TicketDetails/TicketDetails';
 
 function App() {
 	return (
@@ -14,7 +18,11 @@ function App() {
 			<Switch>
 				<PrivateRoute exact path='/' component={Dashboard} />
 				<PrivateRoute exact path='/myprojects' component={MyProjects} />
+				<PrivateRoute exact path='/editproject' component={EditProject} />
+				<PrivateRoute exact path='/projectdetails' component={ProjectDetails} />
 				<PrivateRoute exact path='/mytickets' component={MyTickets} />
+				<PrivateRoute exact path='/editticket' component={EditTicket} />
+				<PrivateRoute exact path='/ticketdetails' component={TicketDetails} />
 				<UnPrivateRoute exact path='/login' component={Login} />
 				<UnPrivateRoute exact path='/register' component={Register} />
 			</Switch>

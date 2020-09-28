@@ -1,0 +1,74 @@
+#ProjectDetails {
+	.main-area {
+		margin-top: 30px;
+	}
+	.info-card {
+		border: 1px solid $black;
+		text-align: center;
+	}
+
+	.btn {
+		text-decoration: none;
+		color: $black;
+		padding: 0 10px;
+		margin: 0 5px;
+		border: 1px solid black;
+		&:hover {
+			color: $black !important;
+			background: #f6b93b;
+			transition: all 0.7s ease 0s;
+		}
+	}
+
+	// Assigned Users Component
+	.assigned-users {
+		border: 1px solid $black;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.user-card {
+		border: 1px solid $black;
+		text-align: center;
+		padding: 20px;
+		overflow-x: hidden;
+		word-wrap: break-word;
+	}
+
+	// Project Tickets Component
+	.project-tickets {
+		border: 1px solid $black;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.ticket-card {
+		text-align: center;
+		padding: 10px;
+		border: 1px solid black;
+		max-height: 280px;
+		overflow: hidden;
+		-webkit-transition: max-height 0.8s;
+		-moz-transition: max-height 0.8s;
+		transition: max-height 1.2s;
+		&:hover {
+			max-height: 1200px;
+		}
+	}
+
+	button {
+		border: 2px solid $black;
+		background: none;
+		padding: 10px 25px;
+		font-size: 14px;
+		color: $black;
+		cursor: pointer;
+		transition: 0.8s;
+		border-radius: 20px;
+		&:hover {
+			color: $black !important;
+			background: #f6b93b;
+			transition: all 0.7s ease 0s;
+		}
+	}
+}

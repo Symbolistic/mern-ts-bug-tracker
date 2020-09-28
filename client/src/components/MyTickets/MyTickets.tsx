@@ -1,12 +1,25 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
-interface Props {}
+interface ITickets extends RouteComponentProps<any> {}
 
-export const MyTickets: React.FC<Props> = () => {
+export const MyTickets: React.FC<ITickets> = (props) => {
+	const handleTicketDetails = (event: any) => {
+		event.preventDefault();
+
+		props.history.push('/ticketdetails');
+	};
+
+	const handleEditTicket = (event: any) => {
+		event.preventDefault();
+
+		props.history.push('/editticket');
+	};
+
 	return (
 		<div id='MyTickets'>
 			<Navbar />
@@ -47,8 +60,8 @@ export const MyTickets: React.FC<Props> = () => {
 									<p>09/26/2020 05:00AM</p>
 
 									<div className='ticket-btns'>
-										<button>Edit / Assign</button>
-										<button>Details</button>
+										<button onClick={handleEditTicket}>Edit / Assign</button>
+										<button onClick={handleTicketDetails}>Details</button>
 									</div>
 								</div>
 							</Grid>

@@ -1,0 +1,70 @@
+#TicketDetails {
+	.main-area {
+		margin-top: 30px;
+	}
+	.info-card {
+		border: 1px solid $black;
+		text-align: center;
+	}
+
+	.btn {
+		text-decoration: none;
+		color: $black;
+		padding: 0 10px;
+		margin: 0 5px;
+		border: 1px solid black;
+		&:hover {
+			color: $black !important;
+			background: #f6b93b;
+			transition: all 0.7s ease 0s;
+		}
+	}
+
+	// Ticket Comments Component
+	.ticket-comments {
+		border: 1px solid $black;
+		padding: 8px;
+		text-align: center;
+
+		form {
+			width: 100%;
+			display: flex;
+
+			input {
+				width: 100%;
+			}
+		}
+	}
+
+	.comment-card {
+		border: 1px solid $black;
+		text-align: center;
+		padding: 20px 0 0 0;
+	}
+
+	// Ticket History Component
+	.ticket-history {
+		border: 1px solid $black;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.history-card {
+		border: 1px solid $black;
+		text-align: center;
+		padding: 20px 0 0 0;
+	}
+
+	// Attachment History Component
+	.ticket-attachments {
+		border: 1px solid $black;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.attachment-card {
+		border: 1px solid $black;
+		text-align: center;
+		padding: 20px 0 0 0;
+	}
+}
