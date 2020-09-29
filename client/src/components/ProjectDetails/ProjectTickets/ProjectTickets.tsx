@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 interface Props {}
@@ -9,6 +10,9 @@ export const ProjectTickets: React.FC<Props> = () => {
 			<Grid item xs={12} md={12} lg={12} className='header'>
 				<h2>Tickets for this Project</h2>
 				<p>List of tickets for this project</p>
+				<Link className='btn' to='/addticket'>
+					Add Ticket
+				</Link>
 			</Grid>
 
 			<Grid container justify='center' spacing={2}>

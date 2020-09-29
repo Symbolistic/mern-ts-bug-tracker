@@ -1,0 +1,22 @@
+#ManageRoles {
+	.main-area {
+		margin-top: 30px;
+	}
+
+	// Personnel Component
+	.personnel {
+		border: 1px solid $black;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.user-card {
+		border: 1px solid $black;
+		text-align: center;
+		padding: 20px 0 0 0;
+	}
+
+	select {
+		width: 220px;
+	}
+}

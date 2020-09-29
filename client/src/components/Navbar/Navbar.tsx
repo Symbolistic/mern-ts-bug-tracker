@@ -32,6 +32,14 @@ export const Navbar: React.FC<Props> = () => {
 						<li className='nav-item nav-link'>Dashboard Home</li>
 					</Link>
 
+					<Link to='/manageroles'>
+						<li className='nav-item nav-link'>Manage Role Assignment</li>
+					</Link>
+
+					<Link to='/manageprojectusers'>
+						<li className='nav-item nav-link'>Manage Project Users</li>
+					</Link>
+
 					<Link to='/myprojects'>
 						<li className='nav-item nav-link'>My Projects</li>
 					</Link>

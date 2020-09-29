@@ -2,7 +2,6 @@ import { Response, Request } from 'express';
 import { UserInt } from '../types/user';
 import { User } from '../models/User';
 import jwt from 'jsonwebtoken';
-import { userInfo } from 'os';
 
 interface MyDetailedError {
 	properties: {
@@ -96,7 +95,7 @@ const login_post = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
 	try {
-		const user = await User.login(email, password);
+		const user: UserInt = await User.login(email, password);
 		const token = createToken(user._id);
 		res.cookie('jwt', token, {
 			httpOnly: true,

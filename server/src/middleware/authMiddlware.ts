@@ -33,7 +33,6 @@ const checkUser = (req: Request, res: Response, next: Function) => {
 				res.locals.authenticated = false;
 				next();
 			} else {
-				console.log(decodedToken, 'checkUser');
 				//let user = await User.findById(decodedToken.id);
 				res.locals.user = decodedToken.id;
 				res.locals.authenticated = true;

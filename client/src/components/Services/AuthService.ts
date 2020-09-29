@@ -1,33 +1,35 @@
 export default {
-	login: (user: object) => {
-		return fetch('http://localhost:8000/login', {
+	login: async (user: object) => {
+		const response = await fetch('http://localhost:8000/login', {
 			method: 'POST',
 			body: JSON.stringify(user),
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		}).then((res) => {
-			if (res.status !== 401) return res.json().then((data) => data);
-			else
-				return {
-					isAuthenticated: false,
-					user: { name: '', email: '', role: '' },
-					message: { msgBody: 'Incorrect Credentials', msgError: true },
-				};
 		});
+		if (response.status !== 401) {
+			const data = response.json();
+			return data;
+		} else {
+			return {
+				isAuthenticated: false,
+				user: { name: '', email: '', role: '' },
+				message: { msgBody: 'Incorrect Credentials', msgError: true },
+			};
+		}
 	},
-	register: (user: object) => {
-		return fetch('http://localhost:8000/register', {
+	register: async (user: object) => {
+		const response = await fetch('http://localhost:8000/register', {
 			method: 'POST',
 			body: JSON.stringify(user),
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		})
-			.then((res) => res.json())
-			.then((data) => data);
+		});
+		const data = await response.json();
+		return data;
 	},
 	forgotPassword: (user: object) => {
 		return fetch('/api/users/forgot-password', {
@@ -51,33 +53,35 @@ export default {
 			.then((res) => res.json())
 			.then((data) => data);
 	},
-	logout: () => {
-		return fetch('http://localhost:8000/logout', {
+	logout: async () => {
+		const response = await fetch('http://localhost:8000/logout', {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-		})
-			.then((res) => res.json())
-			.then((data) => data);
-	},
-	isAuthenticated: () => {
-		return fetch('http://localhost:8000/authenticated', {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
-			if (res.status !== 401) return res.json().then((data) => data);
-			else
-				return {
-					isAuthenticated: false,
-					user: { id: '' },
-				};
 		});
+		const data = await response.json();
+		return data;
+	},
+	isAuthenticated: async () => {
+		const response = await fetch('http://localhost:8000/authenticated', {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		});
+		if (response.status !== 401) {
+			const data = await response.json();
+			return data;
+		} else {
+			return {
+				isAuthenticated: false,
+				user: { id: '' },
+			};
+		}
 	},
 };
