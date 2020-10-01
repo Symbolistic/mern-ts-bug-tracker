@@ -1,16 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Personnel } from './Personnel/Personnel';
+import ProjectService from '../Services/ProjectService';
 
 interface Props {}
 
 export const ManageRoles: React.FC<Props> = () => {
-	const assignRole = (event: any) => {
+	// Handle Errors
+	const [error, setError] = useState({ selectedUsers: '', selectedRole: '' });
+
+	// Handle Inputs
+	const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+	const [selectedRole, setSelectedRole] = useState('--Select Role/None--');
+
+	useEffect(() => {
+		const test = async () => {
+			//let variable = await ProjectService.getUsers();
+			//console.log(variable);
+		};
+		test();
+	}, []);
+
+	// This handles the Multi-Select Element for selecting Users
+	const handleUserSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const options = event.target.options;
+
+		/* This creates a shallow array for options because options is a collection
+		of HTML Elements, its not an actual array, so we make it into a shallow copy of an array
+		and then filter out the options that aren't selected, and then map the selected values */
+		const value = Array.from(options)
+			.filter((o) => o.selected === true)
+			.map((o) => o.value);
+
+		// Here we set those values into state
+		setSelectedUsers(value);
+	};
+
+	// Handle function for the Roles
+	const handleRoleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		event.preventDefault();
-		console.log(event);
+		console.log(event.target.value);
+		setSelectedRole(event.target.value);
+	};
+
+	// This is where we will POST the data to the backend
+	const assignRole = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		setError({ selectedUsers: '', selectedRole: '' });
+
+		if (selectedUsers.length < 1) {
+			setError((oldState) => ({
+				...oldState,
+				selectedUsers: 'Please Select a User!',
+			}));
+		}
+
+		if (selectedRole === '--Select Role/None--') {
+			setError((oldState) => ({
+				...oldState,
+				selectedRole: 'Please Select a Role!',
+			}));
+		}
 	};
 
 	return (
@@ -36,14 +89,17 @@ export const ManageRoles: React.FC<Props> = () => {
 								<Grid item xs={12} md={4} lg={4}>
 									<Grid item xs={12} md={12} lg={12}>
 										<form onSubmit={assignRole}>
-											<h3>Select a User</h3>
-											<select multiple>
-												<option>test1</option>
-												<option>test2</option>
+											<h3>Select 1 or more users</h3>
+											<span>{error.selectedUsers}</span>
+											<select multiple onChange={handleUserSelect}>
+												<option value='test1'>test1</option>
+												<option value='test2'>test2</option>
 											</select>
 
 											<h3>Select a Role to assign</h3>
-											<select>
+											<span>{error.selectedRole}</span>
+											<select onChange={handleRoleSelect} value={selectedRole}>
+												<option>--Select Role/None--</option>
 												<option>hmmm</option>
 												<option>tesooot2</option>
 											</select>

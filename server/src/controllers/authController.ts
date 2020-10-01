@@ -26,7 +26,11 @@ const handleErrors = (err: MyError) => {
 	2. [key: string] says the key will be a string, so instead of only 'email' or 'password', it can be ANYYYY STRING
 	3. : string says the value will always be string 
 	So when we put the variable path into the brackets for errors, it wont give us any issues */
-	let errors: { [key: string]: string } = { email: '', password: '' };
+	let errors: { [key: string]: string } = { name: '', email: '', password: '' };
+
+	if (err.message === 'Please enter your name') {
+		errors.name = err.message;
+	}
 
 	if (err.message === 'Email not found!') {
 		errors.email = err.message;
@@ -74,10 +78,10 @@ const login_get = (req: Request, res: Response) => {
 };
 
 const register_post = async (req: Request, res: Response): Promise<void> => {
-	const { email, password } = req.body;
+	const { name, email, password } = req.body;
 
 	try {
-		const user: UserInt = await User.create({ email, password });
+		const user: UserInt = await User.create({ name, email, password });
 		const token = createToken(user._id);
 		res.cookie('jwt', token, {
 			httpOnly: true,

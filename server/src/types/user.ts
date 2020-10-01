@@ -1,6 +1,7 @@
 import { Document, Model } from 'mongoose';
 
 export interface UserInt extends Document {
+	name: string;
 	email: string;
 	password: string;
 }

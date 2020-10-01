@@ -1,28 +1,29 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-interface PersonnelInt {
-	name: string;
-	email: string;
-	role: string;
-}
-
 interface Props {
-	personnel: PersonnelInt[];
+	personnel: [
+		{
+			_id: string;
+			name: string;
+			email: string;
+			role: string;
+		}
+	];
 }
 
-export const AssignedUsers: React.FC<Props> = ({ personnel }) => {
+export const Personnel: React.FC<Props> = ({ personnel }) => {
 	return (
-		<Grid container spacing={2} justify='center' className='assigned-users'>
+		<Grid container spacing={2} justify='center' className='personnel'>
 			<Grid item xs={12} md={12} lg={12} className='header'>
-				<h2>Assigned Personnel</h2>
-				<p>Current Users on this Project</p>
+				<h2>Your Personnel</h2>
+				<p>These are all the users in your database, AKA your personal team.</p>
 			</Grid>
 
 			<Grid container justify='center' spacing={2}>
 				{personnel.length > 0
 					? personnel.map((user) => (
-							<Grid key={user.email} item xs={12} md={6} lg={6}>
+							<Grid key={user._id} item xs={6} md={4} lg={4}>
 								<div className='user-card'>
 									<Grid item xs={12} md={12} lg={12}>
 										<h3>Name</h3>

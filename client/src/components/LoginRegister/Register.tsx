@@ -6,33 +6,47 @@ import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
 interface IUser extends RouteComponentProps<any> {
+	name?: string;
 	email?: string;
 	password?: string;
+	confirmPassword?: string;
 }
 
 export const Register: React.FC<IUser> = (props) => {
 	// State Handles for the input fields
-	const [user, setUser] = useState({ email: '', password: '' });
-	const [errors, setErrors] = useState({ email: '', password: '' });
+	const [user, setUser] = useState({
+		name: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+	});
+	const [errors, setErrors] = useState({
+		name: '',
+		email: '',
+		password: '',
+	});
 	const authContext = useAuthContext();
 
-	const onSubmit = (event: any) => {
+	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log(user);
 
-		AuthService.register(user).then((data) => {
-			const { isAuthenticated, user, errors } = data;
-			console.log(errors);
+		if (user.password === user.confirmPassword) {
+			AuthService.register(user).then((data) => {
+				const { isAuthenticated, user, errors } = data;
+				console.log(errors);
 
-			if (isAuthenticated) {
-				authContext.setUser(user);
-				authContext.setIsAuthenticated(isAuthenticated);
-				console.log(authContext);
-				props.history.push('/');
-			} else {
-				setErrors(errors); // Set Error Message to be displayed
-			}
-		});
+				if (isAuthenticated) {
+					authContext.setUser(user);
+					authContext.setIsAuthenticated(isAuthenticated);
+					console.log(authContext);
+					props.history.push('/');
+				} else {
+					setErrors(errors); // Set Error Message to be displayed
+				}
+			});
+		} else {
+			setErrors({ name: '', email: '', password: 'Passwords do not match' });
+		}
 	};
 
 	return (
@@ -49,10 +63,19 @@ export const Register: React.FC<IUser> = (props) => {
 							</p>
 
 							<div className='errors'>
-								{Object.values(errors).map((val) => (
-									<div key={val}>{val}</div>
+								{Object.values(errors).map((val, index) => (
+									<div key={index}>{val}</div>
 								))}
 							</div>
+
+							<input
+								type='text'
+								name='name'
+								placeholder='Name'
+								onChange={(e) => setUser({ ...user, name: e.target.value })}
+								value={user.name}
+								required
+							/>
 
 							<input
 								type='text'
@@ -71,6 +94,18 @@ export const Register: React.FC<IUser> = (props) => {
 								value={user.password}
 								required
 							/>
+
+							<input
+								type='password'
+								name='confirmPassword'
+								placeholder='Confirm Password'
+								onChange={(e) =>
+									setUser({ ...user, confirmPassword: e.target.value })
+								}
+								value={user.confirmPassword}
+								required
+							/>
+
 							<button>Register</button>
 						</form>
 

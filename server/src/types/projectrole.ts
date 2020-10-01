@@ -1,4 +1,5 @@
 import { Document, Schema } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 // These are the Roles for the Project Personnel
 enum Role {
@@ -9,8 +10,10 @@ enum Role {
 }
 
 export interface ProjectRoleInt extends Document {
-	user: Schema.Types.ObjectId;
-	projectFrom: Schema.Types.ObjectId;
+	user: ObjectId;
+	projectFrom: ObjectId;
+	name: string;
+	email: string;
 	role: string;
 }
 

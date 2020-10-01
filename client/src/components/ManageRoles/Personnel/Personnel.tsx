@@ -12,7 +12,7 @@ export const Personnel: React.FC<Props> = () => {
 			</Grid>
 
 			<Grid container justify='center' spacing={2}>
-				<Grid item xs={6} md={6} lg={6}>
+				<Grid item xs={6} md={6} lg={4}>
 					<div className='user-card'>
 						<Grid item xs={12} md={12} lg={12}>
 							<h3>Email</h3>
@@ -25,7 +25,7 @@ export const Personnel: React.FC<Props> = () => {
 						</Grid>
 					</div>
 				</Grid>
-				<Grid item xs={6} md={6} lg={6}>
+				<Grid item xs={6} md={6} lg={4}>
 					<div className='user-card'>
 						<Grid item xs={12} md={12} lg={12}>
 							<h3>Email</h3>

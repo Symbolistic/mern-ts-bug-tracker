@@ -1,10 +1,49 @@
-#EditTicket {
+#ManageProjectUsers {
 	.main-area {
 		margin-top: 30px;
 	}
 
-	.ticket-info {
-		border-bottom: 1px solid $black;
-		margin-bottom: 50px;
+	// Personnel Component
+	.personnel {
+		border: 1px solid $black;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.user-card {
+		border: 1px solid $black;
+		text-align: center;
+		padding: 20px 0 0 0;
+	}
+
+	select {
+		width: 95%;
+	}
+
+	span {
+		color: $red;
+	}
+
+	button {
+		border: 2px solid $black;
+		background: none;
+		padding: 10px 25px;
+		margin-top: 10px;
+		font-size: 14px;
+		color: $black;
+		cursor: pointer;
+		transition: 0.8s;
+		&:hover {
+			color: $black !important;
+			background: #f6b93b;
+			transition: all 0.7s ease 0s;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.error {
+		color: $red;
 	}
 }

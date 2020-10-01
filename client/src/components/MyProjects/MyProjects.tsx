@@ -43,12 +43,6 @@ export const MyProjects: React.FC<IProjects> = (props) => {
 		getProjects();
 	}, [authContext.user]);
 
-	const handleProjectDetails = (event: any) => {
-		event.preventDefault();
-
-		props.history.push('/projectdetails');
-	};
-
 	return (
 		<div id='MyProjects'>
 			<Navbar />
@@ -76,10 +70,25 @@ export const MyProjects: React.FC<IProjects> = (props) => {
 												<p>{project.description}</p>
 
 												<div className='project-btns'>
-													<button>Manage Users</button>
-													<button onClick={handleProjectDetails}>
+													<Link
+														className='btn'
+														to={{
+															pathname: '/manageprojectusers',
+															state: { project: project._id },
+														}}
+													>
+														Manage Users
+													</Link>
+
+													<Link
+														className='btn'
+														to={{
+															pathname: '/projectdetails',
+															state: { project: project._id },
+														}}
+													>
 														Details
-													</button>
+													</Link>
 												</div>
 											</div>
 										</Grid>

@@ -32,7 +32,8 @@
 				display: flex;
 				flex-direction: column;
 
-				button {
+				button,
+				.btn {
 					border: 2px solid $black;
 					background: none;
 					padding: 10px 25px;
