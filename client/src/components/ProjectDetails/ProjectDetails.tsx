@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import { AssignedUsers } from './AssignedUsers/AssignedUsers';
 import { ProjectTickets } from './ProjectTickets/ProjectTickets';
 import ProjectService from '../Services/ProjectService';
-import { useAuthContext } from '../Context/AuthContext';
 import { useLocation } from 'react-router-dom';
 
 interface PersonnelInt {
@@ -26,9 +25,6 @@ interface Props extends RouteComponentProps<any, any, MyLocationState> {}
 export const ProjectDetails: React.FC<Props> = () => {
 	const [project, setProject] = useState({ name: '', description: '' });
 	const [personnel, setPersonnel] = useState<PersonnelInt[]>([]);
-
-	// This will get me the ID of the logged in user
-	const authContext = useAuthContext();
 
 	// This will handle the location and passed down state using the useLocation hook
 	const location = useLocation<MyLocationState>();
@@ -97,7 +93,11 @@ export const ProjectDetails: React.FC<Props> = () => {
 							</Grid>
 
 							<Grid item xs={12} md={6} lg={8}>
-								<ProjectTickets />
+								<ProjectTickets
+									projectID={location.state.project}
+									project={project}
+									personnel={personnel}
+								/>
 							</Grid>
 						</Grid>
 					</Container>

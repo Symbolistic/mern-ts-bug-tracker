@@ -6,6 +6,7 @@ import { ProjectRole } from '../models/ProjectRole';
 import Role from '../types/projectrole';
 import { User } from '../models/User';
 import { ObjectId } from 'mongodb';
+import { Ticket } from '../models/Ticket';
 
 interface MyDetailedError {
 	properties: {
@@ -112,6 +113,7 @@ const getUsers = async (req: Request, res: Response) => {
 const projectPersonnel = async (req: Request, res: Response) => {
 	// This comes as implicitly set as 'any', so we convert it to a Mongoose Object ID
 	const projectFrom = new ObjectId(req.body.projectFrom);
+	console.log(req.body);
 	try {
 		const personnel = await ProjectRole.find({ projectFrom }).select({
 			name: 1,
@@ -195,6 +197,19 @@ const getProjectData = async (req: Request, res: Response) => {
 	}
 };
 
+const getProjectTickets = async (req: Request, res: Response) => {
+	// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
+	const projectFrom = new ObjectId(req.params.projectid);
+
+	try {
+		const projectTickets = await Ticket.find({ projectFrom });
+
+		res.status(200).json({ projectTickets, success: true });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const updateProject = async (req: Request, res: Response) => {
 	const { projectID, name, description, user } = req.body;
 	let data;
@@ -216,13 +231,22 @@ const updateProject = async (req: Request, res: Response) => {
 		if (!adminOrOwner) throw new Error('Unauthorized!');
 
 		if (name) {
-			data = await Project.findOneAndUpdate({ _id: projectID }, { name });
+			data = await Project.findOneAndUpdate(
+				{ _id: projectID },
+				{ name },
+				{
+					new: true,
+				}
+			);
 		}
 
 		if (description) {
 			data = await Project.findOneAndUpdate(
 				{ _id: projectID },
-				{ description }
+				{ description },
+				{
+					new: true,
+				}
 			);
 		}
 
@@ -241,4 +265,5 @@ export {
 	assignRoles,
 	getProjectData,
 	updateProject,
+	getProjectTickets,
 };

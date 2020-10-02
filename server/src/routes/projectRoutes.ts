@@ -7,6 +7,7 @@ import {
 	assignRoles,
 	getProjectData,
 	updateProject,
+	getProjectTickets,
 } from '../controllers/projectController';
 
 const router = Router();
@@ -17,6 +18,7 @@ router.get('/getusers/:projectid', getUsers);
 router.post('/projectpersonnel', projectPersonnel);
 router.post('/assignroles', assignRoles);
 router.get('/getprojectdata/:projectid', getProjectData);
+router.get('/getprojecttickets/:projectid', getProjectTickets);
 router.post('/updateproject', updateProject);
 
 export default router;

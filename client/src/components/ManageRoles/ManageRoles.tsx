@@ -4,7 +4,6 @@ import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Personnel } from './Personnel/Personnel';
-import ProjectService from '../Services/ProjectService';
 
 interface Props {}
 

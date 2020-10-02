@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
@@ -7,10 +8,50 @@ import Grid from '@material-ui/core/Grid';
 import { TicketComments } from './TicketComments/TicketComments';
 import { TicketHistory } from './TicketHistory/TicketHistory';
 import { TicketAttachments } from './TicketAttachments/TicketAttachments';
+import { useLocation } from 'react-router-dom';
+import TicketService from '../Services/TicketService';
 
-interface Props {}
+interface MyLocationState {
+	ticketID: string;
+}
+
+interface Props extends RouteComponentProps<any, any, MyLocationState> {}
 
 export const TicketDetails: React.FC<Props> = () => {
+	// This will handle the location and passed down state using the useLocation hook
+	const location = useLocation<MyLocationState>();
+
+	// Ticket Details will be stored in this state
+	const [ticketDetails, setTicketDetails] = useState({
+		title: '',
+		projectName: '',
+		developerAssigned: '',
+		priority: '',
+		status: '',
+		type: '',
+		createdAt: '',
+		updatedAt: '',
+	});
+
+	useEffect(() => {
+		const grabTicketDetails = async (id: string) => {
+			const response = await TicketService.getTicketDetails(id);
+			if (response.success) {
+				setTicketDetails({
+					title: response.ticket.title,
+					projectName: response.ticket.projectName,
+					developerAssigned: response.ticket.developerAssignedName,
+					priority: response.ticket.priority,
+					status: response.ticket.status,
+					type: response.ticket.type,
+					createdAt: response.ticket.createdAt,
+					updatedAt: response.ticket.updatedAt,
+				});
+			}
+		};
+		grabTicketDetails(location.state.ticketID);
+	}, [location.state.ticketID]);
+
 	return (
 		<div id='TicketDetails'>
 			<Navbar />
@@ -37,52 +78,58 @@ export const TicketDetails: React.FC<Props> = () => {
 											<span>Back to List</span>
 										</Link>
 
-										<Link to='/editticket' className='btn'>
+										<Link
+											to={{
+												pathname: '/editticket',
+												state: { ticketID: location.state.ticketID },
+											}}
+											className='btn'
+										>
 											{' '}
 											<span>Edit</span>
 										</Link>
 									</Grid>
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Title</h3>
-										<p>WE NEED LAMB SAUCE</p>
+										<p>{ticketDetails.title}</p>
 									</Grid>
 
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Project Name</h3>
-										<p>ITS RAW!!!!!</p>
+										<p>{ticketDetails.projectName}</p>
 									</Grid>
 
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Developer Assigned</h3>
-										<p>Chef Ramsay</p>
+										<p>{ticketDetails.developerAssigned}</p>
 									</Grid>
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Ticket Priority</h3>
-										<p>High</p>
+										<p>{ticketDetails.priority}</p>
 									</Grid>
 
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Ticket Status</h3>
-										<p>Open</p>
+										<p>{ticketDetails.status}</p>
 									</Grid>
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Ticket Type</h3>
-										<p>Bugs/Errors</p>
+										<p>{ticketDetails.type}</p>
 									</Grid>
 
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Created On</h3>
-										<p>09/26/2020 05:00AM</p>
+										<p>{ticketDetails.createdAt}</p>
 									</Grid>
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Updated On</h3>
-										<p>09/26/2020 05:00AM</p>
+										<p>{ticketDetails.updatedAt}</p>
 									</Grid>
 								</Grid>
 							</Grid>
 
 							<Grid item xs={12} md={8} lg={8}>
-								<TicketComments />
+								<TicketComments ticketID={location.state.ticketID} />
 							</Grid>
 
 							<Grid item xs={12} md={6} lg={6}>

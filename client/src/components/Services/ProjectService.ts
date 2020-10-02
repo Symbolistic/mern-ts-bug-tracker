@@ -75,6 +75,20 @@ export default {
 		const data = await response.json();
 		return data;
 	},
+	getProjectTickets: async (projectid: string) => {
+		const response = await fetch(
+			`http://localhost:8000/getprojecttickets/${projectid}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const data = await response.json();
+		return data;
+	},
 	updateProject: async (info: object) => {
 		const response = await fetch('http://localhost:8000/updateproject', {
 			method: 'POST',

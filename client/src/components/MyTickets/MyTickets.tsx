@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import TicketService from '../Services/TicketService';
+import { useAuthContext } from '../Context/AuthContext';
+
+interface TicketInt {
+	_id: string;
+	title: string;
+	description: string;
+	projectName: string;
+	projectFrom: string;
+	developerAssignedName: string;
+	priority: string;
+	status: string;
+	type: string;
+	createdAt: Date;
+}
 
 interface ITickets extends RouteComponentProps<any> {}
 
 export const MyTickets: React.FC<ITickets> = (props) => {
-	const handleTicketDetails = (event: any) => {
-		event.preventDefault();
+	const [myTickets, setMyTickets] = useState<TicketInt[]>([]);
+	const authContext = useAuthContext();
 
-		props.history.push('/ticketdetails');
-	};
+	useEffect(() => {
+		const getTickets = async (id: string) => {
+			const response = await TicketService.getMyTickets(id);
 
-	const handleEditTicket = (event: any) => {
-		event.preventDefault();
-
-		props.history.push('/editticket');
-	};
+			if (response.success) {
+				setMyTickets(response.tickets);
+			}
+		};
+		getTickets(authContext.user);
+	}, [authContext.user]);
 
 	return (
 		<div id='MyTickets'>
@@ -36,95 +54,56 @@ export const MyTickets: React.FC<ITickets> = (props) => {
 								<p>All the current tickets you have in the database</p>
 							</Grid>
 
-							<Grid item xs={12} md={6} lg={4}>
-								<div className='ticket-card'>
-									<h3>Title</h3>
-									<p>Sample Title</p>
+							{myTickets.length > 0
+								? myTickets.map((ticket) => (
+										<Grid item xs={12} md={6} lg={4} key={ticket._id}>
+											<div className='ticket-card'>
+												<h3>Title</h3>
+												<p>{ticket.title}</p>
 
-									<h3>Project Name</h3>
-									<p>Sample Name</p>
+												<h3>Project Name</h3>
+												<p>{ticket.projectName}</p>
 
-									<h3>Developer Assigned</h3>
-									<p>Symbol</p>
+												<h3>Developer Assigned</h3>
+												<p>{ticket.developerAssignedName}</p>
 
-									<h3>Ticket Priority</h3>
-									<p>Medium</p>
+												<h3>Ticket Priority</h3>
+												<p>{ticket.priority}</p>
 
-									<h3>Ticket Status</h3>
-									<p>Open</p>
+												<h3>Ticket Status</h3>
+												<p>{ticket.status}</p>
 
-									<h3>Ticket Type</h3>
-									<p>Bugs/Errors</p>
+												<h3>Ticket Type</h3>
+												<p>{ticket.type}</p>
 
-									<h3>Created On</h3>
-									<p>09/26/2020 05:00AM</p>
+												<h3>Created On</h3>
+												<p>{ticket.createdAt}</p>
 
-									<div className='ticket-btns'>
-										<button onClick={handleEditTicket}>Edit / Assign</button>
-										<button onClick={handleTicketDetails}>Details</button>
-									</div>
-								</div>
-							</Grid>
+												<div className='ticket-btns'>
+													<Link
+														to={{
+															pathname: '/editticket',
+															state: { ticketID: ticket._id },
+														}}
+														className='btn'
+													>
+														Edit / Assign
+													</Link>
 
-							<Grid item xs={12} md={6} lg={4}>
-								<div className='ticket-card'>
-									<h3>Title</h3>
-									<p>WE NEED LAMB SAUCE</p>
-
-									<h3>Project Name</h3>
-									<p>ITS RAW!!!!!</p>
-
-									<h3>Developer Assigned</h3>
-									<p>Chef Ramsay</p>
-
-									<h3>Ticket Priority</h3>
-									<p>High</p>
-
-									<h3>Ticket Status</h3>
-									<p>Open</p>
-
-									<h3>Ticket Type</h3>
-									<p>Bugs/Errors</p>
-
-									<h3>Created On</h3>
-									<p>09/26/2020 05:00AM</p>
-
-									<div className='ticket-btns'>
-										<button>Edit / Assign</button>
-										<button>Details</button>
-									</div>
-								</div>
-							</Grid>
-
-							<Grid item xs={12} md={6} lg={4}>
-								<div className='ticket-card'>
-									<h3>Title</h3>
-									<p>Sample Title</p>
-
-									<h3>Project Name</h3>
-									<p>Sample Name</p>
-
-									<h3>Developer Assigned</h3>
-									<p>Symbol</p>
-
-									<h3>Ticket Priority</h3>
-									<p>Medium</p>
-
-									<h3>Ticket Status</h3>
-									<p>Open</p>
-
-									<h3>Ticket Type</h3>
-									<p>Bugs/Errors</p>
-
-									<h3>Created On</h3>
-									<p>09/26/2020 05:00AM</p>
-
-									<div className='ticket-btns'>
-										<button>Edit / Assign</button>
-										<button>Details</button>
-									</div>
-								</div>
-							</Grid>
+													<Link
+														to={{
+															pathname: '/ticketdetails',
+															state: { ticketID: ticket._id },
+														}}
+														className='btn'
+													>
+														Details
+													</Link>
+												</div>
+											</div>
+										</Grid>
+								  ))
+								: ''}
 						</Grid>
 					</Container>
 				</Grid>

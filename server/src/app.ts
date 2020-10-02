@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import projectRoutes from './routes/projectRoutes';
+import ticketRoutes from './routes/ticketRoutes';
 import cookieParser from 'cookie-parser';
 import { checkUser, requireAuth } from './middleware/authMiddlware';
 
@@ -58,3 +59,4 @@ app.get('/smoothies', requireAuth, (req, res) => {
 
 app.use(authRoutes);
 app.use(projectRoutes);
+app.use(ticketRoutes);
