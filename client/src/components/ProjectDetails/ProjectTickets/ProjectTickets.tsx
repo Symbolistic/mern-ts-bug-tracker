@@ -90,7 +90,15 @@ export const ProjectTickets: React.FC<Props> = ({
 									<p>{ticket.createdAt}</p>
 
 									<div className='ticket-btns'>
-										<button>More Details</button>
+										<Link
+											to={{
+												pathname: '/ticketdetails',
+												state: { ticketID: ticket._id },
+											}}
+											className='btn'
+										>
+											More Details
+										</Link>
 									</div>
 								</div>
 							</Grid>

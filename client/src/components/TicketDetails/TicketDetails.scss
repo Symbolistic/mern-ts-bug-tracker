@@ -2,6 +2,7 @@
 	.main-area {
 		margin-top: 30px;
 	}
+
 	.info-card {
 		border: 1px solid $black;
 		text-align: center;
@@ -39,7 +40,9 @@
 	.comment-card {
 		border: 1px solid $black;
 		text-align: center;
-		padding: 20px 0 0 0;
+		padding: 20px 5px 0 5px;
+		overflow: hidden;
+		word-wrap: break-word;
 	}
 
 	// Ticket History Component
@@ -52,7 +55,9 @@
 	.history-card {
 		border: 1px solid $black;
 		text-align: center;
-		padding: 20px 0 0 0;
+		padding: 20px 5px 0 5px;
+		overflow: hidden;
+		word-wrap: break-word;
 	}
 
 	// Attachment History Component
@@ -65,6 +70,27 @@
 	.attachment-card {
 		border: 1px solid $black;
 		text-align: center;
-		padding: 20px 0 0 0;
+		padding: 20px 5px 0 5px;
+		overflow: hidden;
+		word-wrap: break-word;
+
+		.img-link {
+			font-weight: bold;
+
+			&:hover {
+				color: $red !important;
+				transition: all 0.7s ease 0s;
+			}
+		}
+	}
+
+	.error {
+		color: $red;
+		padding-bottom: 10px;
+	}
+
+	.message {
+		color: green;
+		padding-bottom: 10px;
 	}
 }

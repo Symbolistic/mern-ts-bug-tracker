@@ -47,6 +47,39 @@ header {
 	#hamburger {
 		display: none;
 	}
+
+	/* Dropdown Menu */
+	.dropdown {
+		color: #ffffff;
+		position: absolute;
+		top: 58px;
+		width: 250px;
+		transform: translateX(-40%);
+		background-color: $black;
+		border: 0.8px solid gray;
+		border-radius: 15px;
+		padding: 1rem;
+		overflow: hidden;
+	}
+
+	.menu-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5rem;
+
+		&:hover {
+			color: burlywood;
+		}
+	}
+
+	.mark-read {
+		text-align: center;
+		border-bottom: 1px solid white;
+		&:hover {
+			color: burlywood;
+		}
+	}
 }
 
 @media only screen and (max-width: 959px) {

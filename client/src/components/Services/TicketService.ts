@@ -74,4 +74,47 @@ export default {
 		const data = await response.json();
 		return data;
 	},
+	getTicketHistory: async (id: string) => {
+		const response = await fetch(
+			`http://localhost:8000/gettickethistory/${id}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const data = await response.json();
+		return data;
+	},
+	uploadTicketAttachment: async (info: object) => {
+		const response = await fetch(
+			'http://localhost:8000/uploadticketattachment',
+			{
+				method: 'POST',
+				body: JSON.stringify(info),
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const data = await response.json();
+		return data;
+	},
+	getTicketAttachments: async (id: string) => {
+		const response = await fetch(
+			`http://localhost:8000/getticketattachments/${id}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const data = await response.json();
+		return data;
+	},
 };

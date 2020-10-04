@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthService from '../Services/AuthService';
 import { useAuthContext } from '../Context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Container } from '@material-ui/core';
+import { Dropdown } from './Dropdown';
 
 interface Props {}
 
 export const Navbar: React.FC<Props> = () => {
+	const [open, setOpen] = useState(false);
+
 	const authContext = useAuthContext();
 
 	const onClickLogoutHandler = () => {
@@ -50,14 +53,17 @@ export const Navbar: React.FC<Props> = () => {
 						<li className='nav-item nav-link'>My Tickets</li>
 					</Link>
 
-					<Link to='/budget'>
+					<Link to='/'>
 						<li className='nav-item nav-link'>User Profile</li>
 					</Link>
 				</div>
 
 				<div className='nav'>
-					<Link to='/budget'>
-						<li className='nav-item nav-link'>Notifications</li>
+					<Link to='/' onClick={() => setOpen(!open)}>
+						<li className='nav-item nav-link'>
+							Notifications
+							{open && <Dropdown />}
+						</li>
 					</Link>
 
 					<Link to='/login' onClick={onClickLogoutHandler}>

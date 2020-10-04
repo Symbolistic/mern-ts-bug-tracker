@@ -133,11 +133,11 @@ export const TicketDetails: React.FC<Props> = () => {
 							</Grid>
 
 							<Grid item xs={12} md={6} lg={6}>
-								<TicketHistory />
+								<TicketHistory ticketID={location.state.ticketID} />
 							</Grid>
 
 							<Grid item xs={12} md={6} lg={6}>
-								<TicketAttachments />
+								<TicketAttachments ticketID={location.state.ticketID} />
 							</Grid>
 						</Grid>
 					</Container>

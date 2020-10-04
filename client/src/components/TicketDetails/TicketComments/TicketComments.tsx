@@ -4,7 +4,7 @@ import TicketService from '../../Services/TicketService';
 import { useAuthContext } from '../../Context/AuthContext';
 
 // Interface for Ticket Comments
-interface TicketCommentInt extends Document {
+interface TicketCommentInt {
 	_id: string;
 	comment: string;
 
