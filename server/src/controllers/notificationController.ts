@@ -3,9 +3,8 @@ import { Notification } from '../models/Notification';
 import ReadStatus from '../types/notification';
 
 const getNotifications = async (req: Request, res: Response) => {
-	const { userid } = req.params;
-
 	try {
+		const { userid } = req.params;
 		const notifications = await Notification.find({ userID: userid }).sort({
 			createdAt: 'desc',
 		});
@@ -15,22 +14,19 @@ const getNotifications = async (req: Request, res: Response) => {
 			readStatus: ReadStatus.UNREAD,
 		});
 
-		res
-			.status(200)
-			.json({
-				notifications,
-				unreadLength: unreadNotifications.length,
-				success: true,
-			});
+		res.status(200).json({
+			notifications,
+			unreadLength: unreadNotifications.length,
+			success: true,
+		});
 	} catch (error) {
 		console.log(error);
 	}
 };
 
 const markRead = async (req: Request, res: Response) => {
-	const { id } = req.body;
-
 	try {
+		const { id } = req.body;
 		const markedRead = await Notification.findByIdAndUpdate(
 			{ _id: id },
 			{ readStatus: ReadStatus.READ }
@@ -42,9 +38,8 @@ const markRead = async (req: Request, res: Response) => {
 };
 
 const deleteNotification = async (req: Request, res: Response) => {
-	const { id } = req.body;
-
 	try {
+		const { id } = req.body;
 		const deletdeNotification = await Notification.findByIdAndDelete({
 			_id: id,
 		});
