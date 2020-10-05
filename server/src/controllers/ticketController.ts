@@ -59,18 +59,18 @@ const handleErrors = (err: MyError) => {
 };
 
 const addTicket = async (req: Request, res: Response) => {
-	const {
-		title,
-		description,
-		projectFrom,
-		projectName,
-		developerAssigned,
-		priority,
-		status,
-		type,
-	} = req.body;
-
 	try {
+		const {
+			title,
+			description,
+			projectFrom,
+			projectName,
+			developerAssigned,
+			priority,
+			status,
+			type,
+		} = req.body;
+
 		const user = await User.findOne({ email: developerAssigned }).select({
 			name: 1,
 			email: 1,
@@ -105,9 +105,8 @@ const addTicket = async (req: Request, res: Response) => {
 };
 
 const getMyTickets = async (req: Request, res: Response) => {
-	const { userid } = req.params;
-
 	try {
+		const { userid } = req.params;
 		const tickets = await Ticket.find({ developerAssignedID: userid }).sort({
 			createdAt: 'desc',
 		});
@@ -118,9 +117,8 @@ const getMyTickets = async (req: Request, res: Response) => {
 };
 
 const getTicketDetails = async (req: Request, res: Response) => {
-	const { ticketid } = req.params;
-
 	try {
+		const { ticketid } = req.params;
 		const ticket = await Ticket.findById({ _id: ticketid });
 		if (!ticket) throw new Error('Ticket not found');
 
