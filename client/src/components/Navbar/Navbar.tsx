@@ -54,6 +54,14 @@ export const Navbar: React.FC<Props> = () => {
 		getNotifications(authContext.user);
 	}, [authContext.user, location.pathname]);
 
+	useEffect(() => {
+		if (open) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'auto';
+		}
+	}, [open]);
+
 	// Handles the logout functionality
 	const onClickLogoutHandler = () => {
 		AuthService.logout().then((data) => {
@@ -88,8 +96,8 @@ export const Navbar: React.FC<Props> = () => {
 						<li className='nav-item nav-link'>My Tickets</li>
 					</Link>
 
-					<Link to='/'>
-						<li className='nav-item nav-link'>User Profile</li>
+					<Link to='/support'>
+						<li className='nav-item nav-link'>Support</li>
 					</Link>
 				</div>
 

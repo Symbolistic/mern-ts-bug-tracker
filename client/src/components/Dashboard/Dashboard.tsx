@@ -3,6 +3,7 @@ import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import { DoughnutChart } from '../Charts/DoughnutChart';
 
 interface Props {}
 

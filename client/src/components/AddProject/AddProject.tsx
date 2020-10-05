@@ -51,6 +51,8 @@ export const AddProject: React.FC<Props> = (props) => {
 									<input
 										onChange={(e) => setInfo({ ...info, name: e.target.value })}
 										value={info.name}
+										maxLength={70}
+										required={true}
 									/>
 								</Grid>
 								<Grid item xs={12} md={6} lg={6}>
@@ -60,6 +62,8 @@ export const AddProject: React.FC<Props> = (props) => {
 											setInfo({ ...info, description: e.target.value })
 										}
 										value={info.description}
+										maxLength={200}
+										required={true}
 									/>
 								</Grid>
 								<button>Submit</button>

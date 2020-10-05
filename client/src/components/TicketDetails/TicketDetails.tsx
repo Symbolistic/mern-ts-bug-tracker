@@ -24,6 +24,7 @@ export const TicketDetails: React.FC<Props> = () => {
 	// Ticket Details will be stored in this state
 	const [ticketDetails, setTicketDetails] = useState({
 		title: '',
+		description: '',
 		projectName: '',
 		developerAssigned: '',
 		priority: '',
@@ -39,6 +40,7 @@ export const TicketDetails: React.FC<Props> = () => {
 			if (response.success) {
 				setTicketDetails({
 					title: response.ticket.title,
+					description: response.ticket.description,
 					projectName: response.ticket.projectName,
 					developerAssigned: response.ticket.developerAssignedName,
 					priority: response.ticket.priority,
@@ -92,6 +94,11 @@ export const TicketDetails: React.FC<Props> = () => {
 									<Grid item xs={6} md={6} lg={6}>
 										<h3>Title</h3>
 										<p>{ticketDetails.title}</p>
+									</Grid>
+
+									<Grid item xs={6} md={6} lg={6}>
+										<h3>Description</h3>
+										<p>{ticketDetails.description}</p>
 									</Grid>
 
 									<Grid item xs={6} md={6} lg={6}>

@@ -117,6 +117,9 @@ export const MyTickets: React.FC<ITickets> = (props) => {
 												<h3>Project Name</h3>
 												<p>{ticket.projectName}</p>
 
+												<h3>Description</h3>
+												<p>{ticket.description}</p>
+
 												<h3>Developer Assigned</h3>
 												<p>{ticket.developerAssignedName}</p>
 

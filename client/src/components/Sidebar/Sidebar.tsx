@@ -21,8 +21,8 @@ export const Sidebar: React.FC<Props> = () => {
 					<li className='nav-item nav-link'>My Tickets</li>
 				</Link>
 
-				<Link to='/budget'>
-					<li className='nav-item nav-link'>User Profile</li>
+				<Link to='/support'>
+					<li className='nav-item nav-link'>Support</li>
 				</Link>
 			</div>
 		</div>

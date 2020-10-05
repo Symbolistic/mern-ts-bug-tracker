@@ -26,19 +26,25 @@ const checkUser = (req: Request, res: Response, next: Function) => {
 	const token = req.cookies.jwt;
 
 	if (token) {
-		jwt.verify(token, 'Symbol', async (err: any, decodedToken: any) => {
-			if (err) {
-				console.log(err.message);
-				res.locals.user = null;
-				res.locals.authenticated = false;
-				next();
-			} else {
-				//let user = await User.findById(decodedToken.id);
-				res.locals.user = decodedToken.id;
-				res.locals.authenticated = true;
-				next();
-			}
-		});
+		if (process.env.SECRET) {
+			jwt.verify(
+				token,
+				process.env.SECRET,
+				async (err: any, decodedToken: any) => {
+					if (err) {
+						console.log(err.message);
+						res.locals.user = null;
+						res.locals.authenticated = false;
+						next();
+					} else {
+						//let user = await User.findById(decodedToken.id);
+						res.locals.user = decodedToken.id;
+						res.locals.authenticated = true;
+						next();
+					}
+				}
+			);
+		}
 	} else {
 		res.locals.user = null;
 		res.locals.authenticated = false;

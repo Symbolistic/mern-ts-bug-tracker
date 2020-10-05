@@ -91,6 +91,7 @@ export const AddTicket: React.FC<Props> = () => {
 												setTicketData({ ...ticketData, title: e.target.value })
 											}
 											value={ticketData.title}
+											maxLength={70}
 											required={true}
 										/>
 									</Grid>
@@ -104,6 +105,7 @@ export const AddTicket: React.FC<Props> = () => {
 												})
 											}
 											value={ticketData.description}
+											maxLength={200}
 											required={true}
 										/>
 									</Grid>

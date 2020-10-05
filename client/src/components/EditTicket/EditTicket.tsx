@@ -134,6 +134,7 @@ export const EditTicket: React.FC<Props> = () => {
 											}
 											value={ticketData.title}
 											required={true}
+											maxLength={100}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6} lg={6}>
@@ -147,6 +148,7 @@ export const EditTicket: React.FC<Props> = () => {
 											}
 											value={ticketData.description}
 											required={true}
+											maxLength={200}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6} lg={6}>

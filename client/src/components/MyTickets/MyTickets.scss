@@ -31,6 +31,7 @@
 			border: 1px solid black;
 			max-height: 180px;
 			overflow: hidden;
+			word-wrap: break-word;
 			-webkit-transition: max-height 0.8s;
 			-moz-transition: max-height 0.8s;
 			transition: max-height 1.2s;

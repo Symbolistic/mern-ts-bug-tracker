@@ -104,6 +104,7 @@ export const EditProject: React.FC<Props> = () => {
 												})
 											}
 											value={projectInfo.name}
+											maxLength={100}
 										/>
 										<button>Submit</button>
 									</form>
@@ -125,6 +126,7 @@ export const EditProject: React.FC<Props> = () => {
 												})
 											}
 											value={projectInfo.description}
+											maxLength={200}
 										/>
 										<button>Submit</button>
 									</form>

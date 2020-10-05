@@ -6,6 +6,8 @@
 	.info-card {
 		border: 1px solid $black;
 		text-align: center;
+		overflow: hidden;
+		word-wrap: break-word;
 	}
 
 	.btn {

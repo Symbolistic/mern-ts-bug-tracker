@@ -188,6 +188,7 @@ export const TicketAttachments: React.FC<Props> = ({ ticketID }) => {
 						onChange={(e) => setNotes(e.target.value)}
 						value={notes}
 						required={true}
+						maxLength={200}
 					/>
 
 					<button className='btn'>Submit</button>

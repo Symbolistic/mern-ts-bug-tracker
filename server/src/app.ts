@@ -22,8 +22,7 @@ app.set('view engine', 'ejs');
 
 // Database Connection
 // URI For the Database
-const URI =
-	'mongodb+srv://Symbol:test@cluster0.3t5ag.mongodb.net/Bug-Tracker?retryWrites=true&w=majority';
+const URI = process.env.URI || '';
 
 // MongoDB Options
 const options = {

@@ -75,6 +75,7 @@ export const Register: React.FC<IUser> = (props) => {
 								onChange={(e) => setUser({ ...user, name: e.target.value })}
 								value={user.name}
 								required
+								maxLength={60}
 							/>
 
 							<input
@@ -84,6 +85,7 @@ export const Register: React.FC<IUser> = (props) => {
 								onChange={(e) => setUser({ ...user, email: e.target.value })}
 								value={user.email}
 								required
+								maxLength={60}
 							/>
 
 							<input

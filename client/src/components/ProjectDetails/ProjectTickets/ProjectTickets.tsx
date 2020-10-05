@@ -136,6 +136,9 @@ export const ProjectTickets: React.FC<Props> = ({
 									<h3>Developer Assigned</h3>
 									<p>{ticket.developerAssignedName}</p>
 
+									<h3>Description</h3>
+									<p>{ticket.description}</p>
+
 									<h3>Ticket Priority</h3>
 									<p>{ticket.priority}</p>
 

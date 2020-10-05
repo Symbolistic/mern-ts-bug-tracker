@@ -8,6 +8,8 @@
 	.info-card {
 		border: 1px solid $black;
 		text-align: center;
+		overflow: hidden;
+		word-wrap: break-word;
 	}
 
 	.btn {
@@ -62,6 +64,7 @@
 		padding: 10px;
 		border: 1px solid black;
 		max-height: 280px;
+		word-wrap: break-word;
 		overflow: hidden;
 		-webkit-transition: max-height 0.8s;
 		-moz-transition: max-height 0.8s;
