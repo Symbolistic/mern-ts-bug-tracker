@@ -5,7 +5,6 @@ import UnPrivateRoute from './components/HOCS/UnPrivateRoute';
 import { Login } from './components/LoginRegister/Login';
 import { Register } from './components/LoginRegister/Register';
 import { Dashboard } from './components/Dashboard/Dashboard';
-import { ManageRoles } from './components/ManageRoles/ManageRoles';
 import { ManageProjectUsers } from './components/ManageProjectUsers/ManageProjectUsers';
 import { MyProjects } from './components/MyProjects/MyProjects';
 import { AddProject } from './components/AddProject/AddProject';
@@ -21,7 +20,6 @@ function App() {
 		<Router>
 			<Switch>
 				<PrivateRoute exact path='/' component={Dashboard} />
-				<PrivateRoute exact path='/manageroles' component={ManageRoles} />
 				<PrivateRoute
 					exact
 					path='/manageprojectusers'

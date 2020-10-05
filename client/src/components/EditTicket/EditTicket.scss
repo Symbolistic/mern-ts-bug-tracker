@@ -7,4 +7,26 @@
 		border-bottom: 1px solid $black;
 		margin-bottom: 50px;
 	}
+
+	.error {
+		text-align: left;
+	}
+
+	.btn {
+		border: 2px solid $black;
+		background: none;
+		padding: 10px 25px;
+		font-size: 14px;
+		color: $black;
+		cursor: pointer;
+		transition: 0.8s;
+		&:hover {
+			color: $black !important;
+			background: #f6b93b;
+			transition: all 0.7s ease 0s;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
 }

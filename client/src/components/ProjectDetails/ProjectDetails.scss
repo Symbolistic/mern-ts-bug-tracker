@@ -31,11 +31,22 @@
 	}
 
 	.user-card {
+		position: relative;
 		border: 1px solid $black;
 		text-align: center;
 		padding: 20px;
 		overflow-x: hidden;
 		word-wrap: break-word;
+
+		.btn-close {
+			background: none;
+			border: none;
+			font-size: 0.9rem;
+			cursor: pointer;
+			position: absolute;
+			right: -10px;
+			top: 2px;
+		}
 	}
 
 	// Project Tickets Component
@@ -46,6 +57,7 @@
 	}
 
 	.ticket-card {
+		position: relative;
 		text-align: center;
 		padding: 10px;
 		border: 1px solid black;
@@ -56,6 +68,16 @@
 		transition: max-height 1.2s;
 		&:hover {
 			max-height: 1200px;
+		}
+
+		.btn-close {
+			background: none;
+			border: none;
+			font-size: 0.9rem;
+			cursor: pointer;
+			position: absolute;
+			right: -10px;
+			top: 2px;
 		}
 	}
 

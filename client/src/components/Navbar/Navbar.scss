@@ -22,20 +22,24 @@ header {
 		list-style: none;
 		display: flex;
 		flex-direction: column;
+		user-select: none;
 		display: none;
+		z-index: 5;
 	}
 
 	.nav {
 		display: inline-block;
 		text-align: right;
 		list-style: none;
+		user-select: none;
 	}
 
-	a {
+	.nav-item {
 		display: inline-block;
 		color: #ffffff;
 		text-decoration: none;
 		padding: 0 10px;
+		cursor: pointer;
 	}
 
 	.fa-bars {
@@ -53,24 +57,45 @@ header {
 		color: #ffffff;
 		position: absolute;
 		top: 58px;
-		width: 250px;
+		width: 270px;
+		height: 88vh;
 		transform: translateX(-40%);
 		background-color: $black;
 		border: 0.8px solid gray;
 		border-radius: 15px;
 		padding: 1rem;
 		overflow: hidden;
+		font-size: 14px;
+		overflow-y: auto;
+	}
+
+	.unread-icon {
+		background-color: $red;
+		padding: 5px 10px;
+		border-radius: 50%;
 	}
 
 	.menu-item {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.5rem;
-
 		&:hover {
 			color: burlywood;
 		}
+	}
+
+	.notes {
+		text-align: left;
+		padding-left: 5px;
+		cursor: default;
+	}
+
+	.read {
+		color: $paragraphColor !important;
+	}
+
+	.unread {
+		color: #ffffff;
 	}
 
 	.mark-read {
@@ -79,6 +104,10 @@ header {
 		&:hover {
 			color: burlywood;
 		}
+	}
+
+	.delete:hover {
+		color: burlywood;
 	}
 }
 
@@ -128,6 +157,14 @@ header {
 				height: calc(100% / 6);
 				padding: 20px 0 40px 0;
 			}
+		}
+	}
+}
+
+@media only screen and (max-width: 290px) {
+	header {
+		.dropdown {
+			transform: translateX(0%);
 		}
 	}
 }

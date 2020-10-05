@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import TicketService from '../Services/TicketService';
 import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { useAuthContext } from '../Context/AuthContext';
 
 interface PersonnelInt {
 	name: string;
@@ -21,6 +22,9 @@ interface MyLocationState {
 interface Props extends RouteComponentProps<any, any, MyLocationState> {}
 
 export const EditTicket: React.FC<Props> = () => {
+	// Handle error messages
+	const [error, setError] = useState('');
+
 	// This will handle the location and passed down state using the useLocation hook
 	const location = useLocation<MyLocationState>();
 
@@ -43,12 +47,12 @@ export const EditTicket: React.FC<Props> = () => {
 		type: 'Bugs/Errors',
 	});
 
+	const authContext = useAuthContext();
+
 	useEffect(() => {
 		const grabTicketDetails = async (id: string) => {
 			const response = await TicketService.getTicketDetails(id);
 			if (response.success) {
-				console.log(response);
-
 				setPersonnel(response.personnel);
 
 				setTicketInfo({
@@ -76,12 +80,15 @@ export const EditTicket: React.FC<Props> = () => {
 		const data = {
 			...ticketData,
 			ticketID: location.state.ticketID,
+			userID: authContext.user,
 		};
 
 		const response = await TicketService.editTicket(data);
 
 		if (response.success) {
 			history.push('/mytickets');
+		} else {
+			setError(response.errors.message);
 		}
 	};
 
@@ -114,6 +121,11 @@ export const EditTicket: React.FC<Props> = () => {
 							</Grid>
 							<form onSubmit={editTicket}>
 								<Grid container spacing={2}>
+									{error && (
+										<Grid item xs={12} md={12} lg={12}>
+											<h3 className='error'>{error}</h3>
+										</Grid>
+									)}
 									<Grid item xs={12} md={6} lg={6}>
 										<h3>Ticket Title</h3>
 										<input
@@ -209,7 +221,7 @@ export const EditTicket: React.FC<Props> = () => {
 										</select>
 									</Grid>
 									<Grid item xs={12} md={6} lg={6}>
-										<button>Submit</button>
+										<button className='btn'>Submit</button>
 									</Grid>
 								</Grid>
 							</form>

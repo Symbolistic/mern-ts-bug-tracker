@@ -24,6 +24,12 @@ interface TicketInt {
 interface ITickets extends RouteComponentProps<any> {}
 
 export const MyTickets: React.FC<ITickets> = (props) => {
+	// Handle success response messages
+	const [message, setMessage] = useState('');
+
+	// Handle error messages
+	const [error, setError] = useState('');
+
 	const [myTickets, setMyTickets] = useState<TicketInt[]>([]);
 	const authContext = useAuthContext();
 
@@ -37,6 +43,36 @@ export const MyTickets: React.FC<ITickets> = (props) => {
 		};
 		getTickets(authContext.user);
 	}, [authContext.user]);
+
+	const deleteTicket = async (ticketID: string) => {
+		setMessage('');
+		setError('');
+
+		const data = {
+			userID: authContext.user,
+			ticketID,
+		};
+
+		try {
+			const response = await TicketService.deleteTicket(data);
+			if (response.success) {
+				// Set the success message
+				setMessage(response.message);
+
+				// Now lets update the render by sending a GET Request for my tickets
+				const myTicketsResponse = await TicketService.getMyTickets(
+					authContext.user
+				);
+
+				if (myTicketsResponse.success) {
+					setMyTickets(myTicketsResponse.tickets);
+				}
+			}
+		} catch (error) {
+			console.log(error);
+			setError(error);
+		}
+	};
 
 	return (
 		<div id='MyTickets'>
@@ -54,10 +90,27 @@ export const MyTickets: React.FC<ITickets> = (props) => {
 								<p>All the current tickets you have in the database</p>
 							</Grid>
 
+							{error && (
+								<Grid item xs={12} md={12} lg={12}>
+									<h3 className='error'>{error}</h3>
+								</Grid>
+							)}
+							{message && (
+								<Grid item xs={12} md={12} lg={12}>
+									<h3 className='message'>{message}</h3>
+								</Grid>
+							)}
+
 							{myTickets.length > 0
 								? myTickets.map((ticket) => (
 										<Grid item xs={12} md={6} lg={4} key={ticket._id}>
 											<div className='ticket-card'>
+												<button
+													className='btn-close'
+													onClick={() => deleteTicket(ticket._id)}
+												>
+													X
+												</button>
 												<h3>Title</h3>
 												<p>{ticket.title}</p>
 

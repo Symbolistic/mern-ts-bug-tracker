@@ -72,12 +72,12 @@ export const AddTicket: React.FC<Props> = () => {
 
 								<Grid container spacing={2} className='ticket-info'>
 									<Grid item xs={6} md={6} lg={6}>
-										<h3>Project Title</h3>
+										<h3>Ticket Title</h3>
 										<p>{location.state.project.name}</p>
 									</Grid>
 
 									<Grid item xs={6} md={6} lg={6}>
-										<h3>Project Description</h3>
+										<h3>Ticket Description</h3>
 										<p>{location.state.project.description}</p>
 									</Grid>
 								</Grid>

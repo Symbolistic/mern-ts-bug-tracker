@@ -11,6 +11,7 @@ import ProjectService from '../Services/ProjectService';
 import { useLocation } from 'react-router-dom';
 
 interface PersonnelInt {
+	user: string;
 	name: string;
 	email: string;
 	role: string;
@@ -89,7 +90,11 @@ export const ProjectDetails: React.FC<Props> = () => {
 							</Grid>
 
 							<Grid item xs={12} md={6} lg={4}>
-								<AssignedUsers personnel={personnel} />
+								<AssignedUsers
+									personnel={personnel}
+									setPersonnel={setPersonnel}
+									projectID={location.state.project}
+								/>
 							</Grid>
 
 							<Grid item xs={12} md={6} lg={8}>

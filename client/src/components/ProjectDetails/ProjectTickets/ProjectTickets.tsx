@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import ProjectService from '../../Services/ProjectService';
+import { useAuthContext } from '../../Context/AuthContext';
+import TicketService from '../../Services/TicketService';
 
 interface TicketInt {
 	_id: string;
@@ -36,6 +38,14 @@ export const ProjectTickets: React.FC<Props> = ({
 }) => {
 	const [tickets, setTickets] = useState<TicketInt[]>([]);
 
+	// Handle success response messages
+	const [message, setMessage] = useState('');
+
+	// Handle error messages
+	const [error, setError] = useState('');
+
+	const authContext = useAuthContext();
+
 	useEffect(() => {
 		const getProjectTickets = async (projectid: string) => {
 			const data = await ProjectService.getProjectTickets(projectid);
@@ -46,6 +56,39 @@ export const ProjectTickets: React.FC<Props> = ({
 
 		getProjectTickets(projectID);
 	}, [projectID]);
+
+	const deleteTicket = async (ticketID: string) => {
+		setMessage('');
+		setError('');
+
+		const data = {
+			userID: authContext.user,
+			ticketID,
+		};
+
+		try {
+			const response = await TicketService.deleteTicket(data);
+			if (response.success) {
+				// Set the success message
+				setMessage(response.message);
+
+				// Now lets update the render by sending a GET Request for my tickets
+				const myTicketsResponse = await ProjectService.getProjectTickets(
+					projectID
+				);
+
+				if (myTicketsResponse.success) {
+					setTickets(myTicketsResponse.projectTickets);
+				}
+			} else {
+				console.log(response);
+				setError(response.errors.message);
+			}
+		} catch (error) {
+			console.log(error);
+			setError(error);
+		}
+	};
 
 	return (
 		<Grid container spacing={2} justify='center' className='project-tickets'>
@@ -64,10 +107,26 @@ export const ProjectTickets: React.FC<Props> = ({
 			</Grid>
 
 			<Grid container justify='center' spacing={2}>
+				{error && (
+					<Grid item xs={12} md={12} lg={12}>
+						<h3 className='error'>{error}</h3>
+					</Grid>
+				)}
+				{message && (
+					<Grid item xs={12} md={12} lg={12}>
+						<h3 className='message'>{message}</h3>
+					</Grid>
+				)}
 				{tickets?.length > 0
 					? tickets.map((ticket) => (
 							<Grid item xs={12} md={6} lg={4} key={ticket._id}>
 								<div className='ticket-card'>
+									<button
+										className='btn-close'
+										onClick={() => deleteTicket(ticket._id)}
+									>
+										X
+									</button>
 									<h3>Title</h3>
 									<p>{ticket.title}</p>
 

@@ -4,6 +4,7 @@ import TicketService from '../../Services/TicketService';
 import { useAuthContext } from '../../Context/AuthContext';
 
 interface AttachmentInt {
+	_id: string;
 	fileName: string;
 	notes: string;
 
@@ -97,6 +98,7 @@ export const TicketAttachments: React.FC<Props> = ({ ticketID }) => {
 			if (response.success) {
 				setMessage('Successfully Uploaded!');
 				setPreviewSource('');
+				getAttachments(ticketID);
 			} else {
 				setError(response.Error);
 			}
@@ -117,6 +119,33 @@ export const TicketAttachments: React.FC<Props> = ({ ticketID }) => {
 		}
 
 		uploadImage(previewSource);
+	};
+
+	const deleteTicketAttachment = async (attachmentID: string) => {
+		setMessage('');
+		setError('');
+
+		const data = {
+			userID: authContext.user,
+			ticketID,
+			attachmentID,
+		};
+
+		try {
+			const response = await TicketService.deleteAttachment(data);
+			if (response.success) {
+				// Set the success message
+				setMessage(response.message);
+
+				// Now lets update the render by sending a GET Request for my tickets
+				getAttachments(ticketID);
+			} else {
+				setError(response.errors.message);
+			}
+		} catch (error) {
+			console.log(error);
+			setError(error);
+		}
 	};
 
 	return (
@@ -161,7 +190,7 @@ export const TicketAttachments: React.FC<Props> = ({ ticketID }) => {
 						required={true}
 					/>
 
-					<button>Submit</button>
+					<button className='btn'>Submit</button>
 				</form>
 
 				<br />
@@ -175,6 +204,12 @@ export const TicketAttachments: React.FC<Props> = ({ ticketID }) => {
 					attachments.map((attachment) => (
 						<Grid item xs={6} md={6} lg={6} key={attachment.fileSrc}>
 							<div className='attachment-card'>
+								<button
+									className='btn-close'
+									onClick={() => deleteTicketAttachment(attachment._id)}
+								>
+									X
+								</button>
 								<Grid item xs={12} md={12} lg={12}>
 									<h3>File</h3>
 									<a href={attachment.fileSrc}>

@@ -38,6 +38,7 @@
 	}
 
 	.comment-card {
+		position: relative;
 		border: 1px solid $black;
 		text-align: center;
 		padding: 20px 5px 0 5px;
@@ -68,6 +69,7 @@
 	}
 
 	.attachment-card {
+		position: relative;
 		border: 1px solid $black;
 		text-align: center;
 		padding: 20px 5px 0 5px;

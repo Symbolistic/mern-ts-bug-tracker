@@ -1,30 +1,45 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+import { DropdownItem } from './DropdownItem';
 
-interface Props {}
+interface NotificationsInt {
+	_id: string;
 
-export const Dropdown: React.FC<Props> = () => {
-	function DropdownItem(props: any) {
-		return (
-			<div>
-				<div className='menu-item'>
-					{props.children}
-					<i className='fas fa-trash'></i>
-				</div>
-				<p className='mark-read'>Mark as Read</p>
-			</div>
-		);
-	}
+	message: string;
 
+	// The Project ID this notification is for
+	projectFrom: string;
+
+	// User's ID this notification is being sent to
+	userID: string;
+
+	readStatus: string;
+}
+
+interface Props {
+	notifications: NotificationsInt[];
+	setNotifications: React.Dispatch<React.SetStateAction<NotificationsInt[]>>;
+	setUnread: React.Dispatch<React.SetStateAction<number | undefined>>;
+}
+
+export const Dropdown: React.FC<Props> = ({
+	notifications,
+	setNotifications,
+	setUnread,
+}) => {
 	return (
 		<div className='dropdown'>
-			<DropdownItem>
-				<span>
-					My Item 1 IS HERE I AM CHECKING DUCK QUACK QUACK WHAT AM I SAYING
-				</span>
-			</DropdownItem>
-			<DropdownItem>My Item 2</DropdownItem>
+			{notifications.length > 0 &&
+				notifications.map((notification) => (
+					<DropdownItem
+						key={notification._id}
+						readStatus={notification.readStatus}
+						id={notification._id}
+						setNotifications={setNotifications}
+						setUnread={setUnread}
+					>
+						{notification.message}
+					</DropdownItem>
+				))}
 		</div>
 	);
 };

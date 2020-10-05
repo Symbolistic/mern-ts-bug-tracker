@@ -22,6 +22,12 @@ interface myProjectsInt {
 interface IProjects extends RouteComponentProps<any> {}
 
 export const MyProjects: React.FC<IProjects> = (props) => {
+	// Handle success response messages
+	const [message, setMessage] = useState('');
+
+	// Handle error messages
+	const [error, setError] = useState('');
+
 	const [projects, setProjects] = useState<myProjectsInt[]>([]);
 	const authContext = useAuthContext();
 
@@ -43,6 +49,33 @@ export const MyProjects: React.FC<IProjects> = (props) => {
 		getProjects();
 	}, [authContext.user]);
 
+	// This will handle project deletion
+	const deleteProject = async (projectID: string) => {
+		setMessage('');
+		setError('');
+
+		const data = {
+			userID: authContext.user,
+			projectID,
+		};
+
+		const response = await ProjectService.deleteProject(data);
+
+		if (response.success) {
+			// Set the success message
+			setMessage(response.message);
+
+			/* I basically call the GET Projects request manually since I can't take out
+			the function for getProjects from useEffect or it yells at me... */
+			const getProjectResponse = await ProjectService.myProjects({
+				user: authContext.user,
+			});
+			if (getProjectResponse.success) {
+				setProjects(getProjectResponse.projects);
+			}
+		}
+	};
+
 	return (
 		<div id='MyProjects'>
 			<Navbar />
@@ -61,11 +94,27 @@ export const MyProjects: React.FC<IProjects> = (props) => {
 									CREATE NEW PROJECT
 								</Link>
 							</Grid>
+							{error && (
+								<Grid item xs={12} md={12} lg={12}>
+									<h3 className='error'>{error}</h3>
+								</Grid>
+							)}
+							{message && (
+								<Grid item xs={12} md={12} lg={12}>
+									<h3 className='message'>{message}</h3>
+								</Grid>
+							)}
 
 							{projects.length > 0
 								? projects.map((project) => (
 										<Grid key={project._id} item xs={12} md={6} lg={4}>
 											<div className='project-card'>
+												<button
+													className='btn-close'
+													onClick={() => deleteProject(project._id)}
+												>
+													X
+												</button>
 												<h3>{project.name}</h3>
 												<p>{project.description}</p>
 

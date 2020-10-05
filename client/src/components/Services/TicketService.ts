@@ -117,4 +117,40 @@ export default {
 		const data = await response.json();
 		return data;
 	},
+	deleteTicket: async (info: object) => {
+		const response = await fetch('http://localhost:8000/deleteticket', {
+			method: 'POST',
+			body: JSON.stringify(info),
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		return data;
+	},
+	deleteComment: async (info: object) => {
+		const response = await fetch('http://localhost:8000/deletecomment', {
+			method: 'POST',
+			body: JSON.stringify(info),
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		return data;
+	},
+	deleteAttachment: async (info: object) => {
+		const response = await fetch('http://localhost:8000/deleteattachment', {
+			method: 'POST',
+			body: JSON.stringify(info),
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		return data;
+	},
 };

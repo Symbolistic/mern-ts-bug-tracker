@@ -8,6 +8,9 @@ import { TicketCommentInt } from '../types/ticketcomment';
 import { TicketHistory } from '../models/TicketHistory';
 import cloudinary from '../utils/cloudinary';
 import { TicketAttachment } from '../models/TicketAttachment';
+import { Notification } from '../models/Notification';
+import ReadStatus from '../types/notification';
+import Role from '../types/projectrole';
 
 interface MyDetailedError {
 	properties: {
@@ -38,6 +41,17 @@ const handleErrors = (err: MyError) => {
 	};
 
 	if (err.message === 'Unauthorized!') {
+		errors.message = err.message;
+	}
+
+	if (err.message === 'Ticket could not be deleted! 404!') {
+		errors.message = err.message;
+	}
+	if (err.message === 'Ticket not found') {
+		errors.message = err.message;
+	}
+
+	if (err.message === 'Unauthorized! You have no permissions in this ticket!') {
 		errors.message = err.message;
 	}
 
@@ -75,6 +89,15 @@ const addTicket = async (req: Request, res: Response) => {
 			status,
 			type,
 		});
+
+		// Now after we made the ticket we will send a notification to the assigned user
+		const notification = await Notification.create({
+			message: `You've been assigned a new ticket! Ticket Name: ${title} Project Name: ${projectName}`,
+			userID: user._id,
+			projectFrom,
+			readStatus: ReadStatus.UNREAD,
+		});
+
 		res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
@@ -85,7 +108,9 @@ const getMyTickets = async (req: Request, res: Response) => {
 	const { userid } = req.params;
 
 	try {
-		const tickets = await Ticket.find({ developerAssignedID: userid });
+		const tickets = await Ticket.find({ developerAssignedID: userid }).sort({
+			createdAt: 'desc',
+		});
 		res.status(200).json({ tickets, success: true });
 	} catch (error) {
 		console.log(error);
@@ -135,9 +160,35 @@ const editTicket = async (req: Request, res: Response) => {
 		status,
 		type,
 		ticketID,
+		userID,
 	} = req.body;
 
 	try {
+		// Here I am grabbing Project ID so I can backtrack and find the current logged in users info
+		const projectID = await Ticket.findById({ _id: ticketID }).select({
+			_id: 0,
+			projectFrom: 1,
+		});
+
+		if (!projectID) throw new Error('Unauthorized! Project not found!');
+
+		const currentUser = await ProjectRole.findOne({
+			user: userID,
+			projectFrom: projectID.projectFrom,
+		});
+
+		// This checks to make sure the logged in User is a Owner or Admin
+		if (!currentUser) throw new Error('Unauthorized!');
+		const adminOrOwner = [Role.ADMIN, Role.OWNER].includes(
+			currentUser.role as Role
+		);
+
+		/* If this ticket isn't assigned to current USER ID and they aren't an Owner/Admin
+		I convert both to strings so they can correctly match and work in the If Statement
+		I am using the Email to compare since this is the main info coming from the frontend */
+		if (!adminOrOwner && developerAssigned !== currentUser.email.toString())
+			throw new Error('Unauthorized! You have no permissions in this ticket!');
+
 		// Grab the user info using the developerAssigned variable (it has the users email)
 		const user = await User.findOne({ email: developerAssigned });
 
@@ -208,6 +259,9 @@ const editTicket = async (req: Request, res: Response) => {
 		}
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
@@ -303,6 +357,147 @@ const getTicketAttachments = async (req: Request, res: Response) => {
 	}
 };
 
+const deleteTicket = async (req: Request, res: Response) => {
+	const { userID, ticketID } = req.body;
+
+	try {
+		const ticket = await Ticket.findById({ _id: ticketID });
+		if (!ticket) throw new Error('Ticket not found');
+
+		const currentUser = await ProjectRole.findOne({
+			user: userID,
+			projectFrom: ticket.projectFrom,
+		});
+
+		// This checks to make sure the logged in User is a Owner or Admin
+		if (!currentUser) throw new Error('Unauthorized!');
+		const adminOrOwner = [Role.ADMIN, Role.OWNER].includes(
+			currentUser.role as Role
+		);
+
+		/* If this ticket isn't assigned to current USER ID and they aren't an Owner/Admin
+		I convert both to strings so they can correctly match and work in the If Statement */
+		if (
+			!adminOrOwner &&
+			ticket.developerAssignedID.toString() !== currentUser.user.toString()
+		)
+			throw new Error('Unauthorized!');
+
+		// Now we try to delete the ticket
+		const deletedTicket = await Ticket.findByIdAndDelete({ _id: ticketID });
+
+		// If Unsuccessful, throw error
+		if (!deletedTicket) throw new Error('Ticket could not be deleted! 404!');
+
+		// If Successful, pass the successful message
+		res.status(200).json({
+			message: `Successfully Deleted Ticket: ${deletedTicket.title}`,
+			success: true,
+		});
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
+	}
+};
+
+const deleteTicketComment = async (req: Request, res: Response) => {
+	const { userID, ticketID, commentID } = req.body;
+
+	try {
+		const ticket = await Ticket.findById({ _id: ticketID });
+		if (!ticket) throw new Error('Ticket not found');
+
+		const currentUser = await ProjectRole.findOne({
+			user: userID,
+			projectFrom: ticket.projectFrom,
+		});
+
+		// This checks to make sure the logged in User is a Owner or Admin
+		if (!currentUser) throw new Error('Unauthorized!');
+		const adminOrOwner = [Role.ADMIN, Role.OWNER].includes(
+			currentUser.role as Role
+		);
+
+		/* If this ticket isn't assigned to current USER ID and they aren't an Owner/Admin
+		I convert both to strings so they can correctly match and work in the If Statement */
+		if (
+			!adminOrOwner &&
+			ticket.developerAssignedID.toString() !== currentUser.user.toString()
+		)
+			throw new Error('Unauthorized! You have no permissions in this ticket!');
+
+		// Now we try to delete the ticket comment
+		const deletedTicketComment = await TicketComment.findByIdAndDelete({
+			_id: commentID,
+		});
+
+		// If Unsuccessful, throw error
+		if (!deletedTicketComment)
+			throw new Error('Ticket Comment could not be deleted! 404!');
+
+		// If Successful, pass the successful message
+		res.status(200).json({
+			message: 'Successfully Deleted Comment',
+			success: true,
+		});
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
+	}
+};
+
+const deleteTicketAttachment = async (req: Request, res: Response) => {
+	const { userID, ticketID, attachmentID } = req.body;
+
+	try {
+		const ticket = await Ticket.findById({ _id: ticketID });
+		if (!ticket) throw new Error('Ticket not found');
+
+		const currentUser = await ProjectRole.findOne({
+			user: userID,
+			projectFrom: ticket.projectFrom,
+		});
+
+		// This checks to make sure the logged in User is a Owner or Admin
+		if (!currentUser) throw new Error('Unauthorized!');
+		const adminOrOwner = [Role.ADMIN, Role.OWNER].includes(
+			currentUser.role as Role
+		);
+
+		/* If this ticket isn't assigned to current USER ID and they aren't an Owner/Admin
+		I convert both to strings so they can correctly match and work in the If Statement */
+		if (
+			!adminOrOwner &&
+			ticket.developerAssignedID.toString() !== currentUser.user.toString()
+		)
+			throw new Error('Unauthorized! You have no permissions in this ticket!');
+
+		// Now we try to delete the ticket comment
+		const deletedAttachment = await TicketAttachment.findByIdAndDelete({
+			_id: attachmentID,
+		});
+
+		// If Unsuccessful, throw error
+		if (!deletedAttachment)
+			throw new Error('Ticket Attachment could not be deleted! 404!');
+
+		// If Successful, pass the successful message
+		res.status(200).json({
+			message: 'Successfully Deleted Attachment',
+			success: true,
+		});
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
+	}
+};
+
 export {
 	addTicket,
 	getMyTickets,
@@ -313,4 +508,7 @@ export {
 	getTicketHistory,
 	uploadTicketAttachment,
 	getTicketAttachments,
+	deleteTicket,
+	deleteTicketComment,
+	deleteTicketAttachment,
 };

@@ -101,4 +101,28 @@ export default {
 		const data = await response.json();
 		return data;
 	},
+	deleteProject: async (info: object) => {
+		const response = await fetch('http://localhost:8000/deleteproject', {
+			method: 'POST',
+			body: JSON.stringify(info),
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		return data;
+	},
+	deletePersonnel: async (info: object) => {
+		const response = await fetch('http://localhost:8000/deletepersonnel', {
+			method: 'POST',
+			body: JSON.stringify(info),
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		return data;
+	},
 };
