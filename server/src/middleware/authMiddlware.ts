@@ -7,17 +7,19 @@ const requireAuth = (req: Request, res: Response, next: Function) => {
 
 	// Check if JSON Web Token Exist & is verified
 	if (token) {
-		jwt.verify(token, 'Symbol', (err: any, decodedToken: any) => {
-			if (err) {
-				console.log(err.message);
-				res.redirect('/login');
-			} else {
-				console.log(decodedToken);
-				next();
-			}
-		});
-	} else {
-		res.redirect('/login');
+		if (process.env.SECRET) {
+			jwt.verify(token, process.env.SECRET, (err: any, decodedToken: any) => {
+				if (err) {
+					console.log(err.message);
+					res.redirect('/login');
+				} else {
+					console.log(decodedToken);
+					next();
+				}
+			});
+		} else {
+			res.redirect('/login');
+		}
 	}
 };
 
