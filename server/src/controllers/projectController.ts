@@ -112,30 +112,34 @@ const myProjects = async (req: Request, res: Response) => {
 };
 
 const getUsers = async (req: Request, res: Response) => {
-	// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
-	const projectFrom = new ObjectId(req.params.projectid);
+	try {
+		// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
+		const projectFrom = new ObjectId(req.params.projectid);
 
-	// Here we grab the personnel for this project to use as a filter
-	const personnel = await ProjectRole.find({ projectFrom })
-		.select({
-			_id: 0,
-			email: 1,
-		})
-		.distinct('email'); // This takes the emails out of the objects and returns an array of emails
+		// Here we grab the personnel for this project to use as a filter
+		const personnel = await ProjectRole.find({ projectFrom })
+			.select({
+				_id: 0,
+				email: 1,
+			})
+			.distinct('email'); // This takes the emails out of the objects and returns an array of emails
 
-	// Now we find all the users in the database and use $nin to NOT INCLUDE users already in our personnel
-	const users = await User.find({
-		email: { $nin: personnel },
-	}).select({ _id: 1, email: 1 });
+		// Now we find all the users in the database and use $nin to NOT INCLUDE users already in our personnel
+		const users = await User.find({
+			email: { $nin: personnel },
+		}).select({ _id: 1, email: 1 });
 
-	res.status(200).json({ users });
+		res.status(200).json({ users });
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const projectPersonnel = async (req: Request, res: Response) => {
-	// This comes as implicitly set as 'any', so we convert it to a Mongoose Object ID
-	const projectFrom = new ObjectId(req.body.projectFrom);
-
 	try {
+		// This comes as implicitly set as 'any', so we convert it to a Mongoose Object ID
+		const projectFrom = new ObjectId(req.body.projectFrom);
+
 		const personnel = await ProjectRole.find({ projectFrom }).select({
 			name: 1,
 			email: 1,
@@ -215,10 +219,10 @@ const assignRoles = async (req: Request, res: Response) => {
 };
 
 const getProjectData = async (req: Request, res: Response) => {
-	// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
-	const projectFrom = new ObjectId(req.params.projectid);
-
 	try {
+		// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
+		const projectFrom = new ObjectId(req.params.projectid);
+
 		const projectInfo = await Project.findById({ _id: projectFrom }).select({
 			name: 1,
 			description: 1,
