@@ -101,6 +101,9 @@ const addTicket = async (req: Request, res: Response) => {
 		res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
@@ -113,6 +116,9 @@ const getMyTickets = async (req: Request, res: Response) => {
 		res.status(200).json({ tickets, success: true });
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
@@ -282,6 +288,9 @@ const createTicketComment = async (req: Request, res: Response) => {
 		res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
@@ -293,6 +302,9 @@ const getTicketComments = async (req: Request, res: Response) => {
 		res.status(200).json({ ticketComments, success: true });
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
@@ -304,6 +316,9 @@ const getTicketHistory = async (req: Request, res: Response) => {
 		res.status(200).json({ ticketHistory, success: true });
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
@@ -352,6 +367,9 @@ const getTicketAttachments = async (req: Request, res: Response) => {
 		res.status(200).json({ ticketAttachments, success: true });
 	} catch (error) {
 		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
 	}
 };
 
