@@ -246,10 +246,10 @@ const getProjectData = async (req: Request, res: Response) => {
 };
 
 const getProjectTickets = async (req: Request, res: Response) => {
-	// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
-	const projectFrom = new ObjectId(req.params.projectid);
-
 	try {
+		// This comes as a string since its a Param, so we convert it to a Mongoose Object ID
+		const projectFrom = new ObjectId(req.params.projectid);
+
 		const projectTickets = await Ticket.find({ projectFrom });
 
 		res.status(200).json({ projectTickets, success: true });
