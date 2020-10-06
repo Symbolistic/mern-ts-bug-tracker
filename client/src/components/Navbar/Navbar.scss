@@ -114,17 +114,15 @@ header {
 @media only screen and (max-width: 959px) {
 	header {
 		.header-nav {
-			flex-direction: column;
-			justify-content: stretch;
 			height: 100%;
 			padding: 0 !important; // This will override material UI's container
 		}
 		.fa-bars {
 			position: absolute;
 			display: block;
+			left: 0;
 			margin: 0 15px;
 			z-index: 100;
-			position: absolute;
 			color: #ffffff;
 		}
 
@@ -161,10 +159,10 @@ header {
 	}
 }
 
-@media only screen and (max-width: 290px) {
+@media only screen and (max-width: 320px) {
 	header {
 		.dropdown {
-			transform: translateX(0%);
+			transform: translateX(-18%);
 		}
 	}
 }
