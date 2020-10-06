@@ -55,7 +55,9 @@ export const Navbar: React.FC<Props> = () => {
 	};
 
 	useEffect(() => {
-		getNotifications(authContext.user);
+		if (authContext.user) {
+			getNotifications(authContext.user);
+		}
 	}, [authContext.user, location.pathname]);
 
 	useEffect(() => {

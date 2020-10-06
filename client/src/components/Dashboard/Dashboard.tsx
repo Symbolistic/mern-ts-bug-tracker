@@ -48,7 +48,9 @@ export const Dashboard: React.FC<Props> = () => {
 	};
 
 	useEffect(() => {
-		getChartData(authContext.user);
+		if (authContext.user) {
+			getChartData(authContext.user);
+		}
 	}, [authContext.user]);
 
 	return (

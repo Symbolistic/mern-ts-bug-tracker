@@ -5,7 +5,6 @@ import projectRoutes from './routes/projectRoutes';
 import ticketRoutes from './routes/ticketRoutes';
 import notificationRoutes from './routes/notificationRoutes';
 import cookieParser from 'cookie-parser';
-import { checkUser, requireAuth } from './middleware/authMiddlware';
 import path from 'path';
 
 const app = express();
