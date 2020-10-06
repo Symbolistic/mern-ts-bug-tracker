@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"predev": "tsc",
-		"start": "node /server/dist/js/src/app.js",
+		"start": "node server/dist/js/src/app.js",
 		"backend": "concurrently \"tsc -w\" \"nodemon server/dist/js/src/app.js\"",
 		"frontend": "npm run start --prefix client",
 		"dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
