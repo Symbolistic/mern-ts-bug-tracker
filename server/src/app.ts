@@ -7,6 +7,7 @@ import ticketRoutes from './routes/ticketRoutes';
 import notificationRoutes from './routes/notificationRoutes';
 import cookieParser from 'cookie-parser';
 import { checkUser, requireAuth } from './middleware/authMiddlware';
+import path from 'path';
 
 const app = express();
 
@@ -19,6 +20,19 @@ app.use(cookieParser());
 
 // View Engine
 app.set('view engine', 'ejs');
+
+// Production Mode
+if (process.env.NODE_ENV === 'production') {
+	// Set Static Folder
+	app.use(express.static('client/build'));
+
+	// index.html for all page routes
+	app.get('*', (req, res) => {
+		res.sendFile(
+			path.resolve(__dirname, '../../client', 'build', 'index.html')
+		);
+	});
+}
 
 // Database Connection
 // URI For the Database
