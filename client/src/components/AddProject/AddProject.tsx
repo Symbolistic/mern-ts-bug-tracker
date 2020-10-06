@@ -30,7 +30,7 @@ export const AddProject: React.FC<Props> = (props) => {
 		if (response.projectCreated) {
 			props.history.push('/myprojects');
 		} else {
-			if (response.error.message) {
+			if (response.errors.message) {
 				setError(response.errors.message);
 			} else {
 				setError('An unknown error has occured');

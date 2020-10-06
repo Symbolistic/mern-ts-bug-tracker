@@ -56,7 +56,7 @@ export const AddTicket: React.FC<Props> = () => {
 		if (response.success) {
 			history.goBack();
 		} else {
-			if (response.error.message) {
+			if (response.errors.message) {
 				setError(response.errors.message);
 			} else {
 				setError('An unknown error has occured');

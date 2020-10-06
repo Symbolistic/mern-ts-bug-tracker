@@ -55,6 +55,10 @@ const handleErrors = (err: MyError) => {
 		errors.message = err.message;
 	}
 
+	if (err.message === 'Length too long') {
+		errors.message = 'Length too long stop trying to hek me';
+	}
+
 	return errors;
 };
 
@@ -101,9 +105,11 @@ const addTicket = async (req: Request, res: Response) => {
 		res.status(200).json({ success: true });
 	} catch (error) {
 		console.log(error);
-		const errors = handleErrors(error);
 		// If Unsuccessful, pass the message
-		res.status(401).json({ errors });
+		const errors = { message: 'An error has occured, why u tryin to hek me?' };
+		res.status(401).json({
+			errors,
+		});
 	}
 };
 
@@ -156,18 +162,22 @@ const getTicketDetails = async (req: Request, res: Response) => {
 };
 
 const editTicket = async (req: Request, res: Response) => {
-	const {
-		title,
-		description,
-		developerAssigned,
-		priority,
-		status,
-		type,
-		ticketID,
-		userID,
-	} = req.body;
-
 	try {
+		const {
+			title,
+			description,
+			developerAssigned,
+			priority,
+			status,
+			type,
+			ticketID,
+			userID,
+		} = req.body;
+
+		if (title.length > 70 || description.length > 200) {
+			throw new Error('Length too long');
+		}
+
 		// Here I am grabbing Project ID so I can backtrack and find the current logged in users info
 		const projectID = await Ticket.findById({ _id: ticketID }).select({
 			_id: 0,

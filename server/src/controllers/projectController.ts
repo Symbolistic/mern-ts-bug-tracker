@@ -53,6 +53,10 @@ const handleErrors = (err: MyError) => {
 		errors.message = err.message;
 	}
 
+	if (err.message === 'Length too long') {
+		errors.message = 'Length too long stop trying to hek me';
+	}
+
 	return errors;
 };
 
@@ -85,6 +89,10 @@ const createProject = async (req: Request, res: Response) => {
 		}
 	} catch (error) {
 		console.log(error);
+		const errors = { message: 'An error has occured, why u tryin to hek me?' };
+		res.status(401).json({
+			errors,
+		});
 	}
 };
 
@@ -107,7 +115,9 @@ const myProjects = async (req: Request, res: Response) => {
 		});
 		res.status(200).json({ projects, success: true });
 	} catch (error) {
-		console.log(error);
+		const errors = handleErrors(error);
+		console.log(errors);
+		res.status(401).json({ errors });
 	}
 };
 
@@ -131,7 +141,9 @@ const getUsers = async (req: Request, res: Response) => {
 
 		res.status(200).json({ users });
 	} catch (error) {
-		console.log(error);
+		const errors = handleErrors(error);
+		console.log(errors);
+		res.status(401).json({ errors });
 	}
 };
 
@@ -148,7 +160,9 @@ const projectPersonnel = async (req: Request, res: Response) => {
 
 		res.status(200).json({ users: personnel });
 	} catch (error) {
-		console.log(error);
+		const errors = handleErrors(error);
+		console.log(errors);
+		res.status(401).json({ errors });
 	}
 };
 
@@ -181,7 +195,6 @@ const assignRoles = async (req: Request, res: Response) => {
 			name: 1,
 			email: 1,
 		});
-		console.log(users);
 
 		// Organize the data into an array of objects
 		let batch = usersData.map((user) => {
@@ -264,6 +277,10 @@ const updateProject = async (req: Request, res: Response) => {
 	try {
 		if (!name && !description) {
 			throw new Error('Name and Description are undefined!');
+		}
+
+		if (name.length > 70 || description.length > 200) {
+			throw new Error('Length too long');
 		}
 
 		const currentUser = await ProjectRole.findOne({
