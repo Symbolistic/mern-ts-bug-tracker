@@ -8,6 +8,7 @@ import { BarChart } from '../Charts/BarChart';
 import { PieChart } from '../Charts/PieChart';
 import TicketService from '../Services/TicketService';
 import { useAuthContext } from '../Context/AuthContext';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -69,7 +70,9 @@ export const Dashboard: React.FC<Props> = () => {
 									<div className='chart'>
 										<BarChart priority={ticketData.priority} />
 									</div>
-									<h3>Tickets by Priority</h3>
+									<Link className='ticket-type' to='/mytickets'>
+										<h3>Tickets by Priority</h3>
+									</Link>
 								</div>
 							</Grid>
 
@@ -78,7 +81,9 @@ export const Dashboard: React.FC<Props> = () => {
 									<div className='chart'>
 										<DoughnutChart type={ticketData.type} />
 									</div>
-									<h3>Tickets by Type</h3>
+									<Link className='ticket-type' to='/mytickets'>
+										<h3>Tickets by Type</h3>
+									</Link>
 								</div>
 							</Grid>
 
@@ -87,7 +92,9 @@ export const Dashboard: React.FC<Props> = () => {
 									<div className='chart'>
 										<PieChart status={ticketData.status} />
 									</div>
-									<h3>Tickets by Status</h3>
+									<Link className='ticket-type' to='/mytickets'>
+										<h3>Tickets by Status</h3>
+									</Link>
 								</div>
 							</Grid>
 						</Grid>

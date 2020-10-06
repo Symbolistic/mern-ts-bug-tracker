@@ -15,9 +15,15 @@
 		}
 
 		h3 {
+			color: $black;
 			background-color: $greyBG;
 			text-align: center;
 			padding: 10px;
+			text-decoration: none;
+			transition: all 0.5s ease-in-out;
+			&:hover {
+				color: burlywood;
+			}
 		}
 	}
 }
