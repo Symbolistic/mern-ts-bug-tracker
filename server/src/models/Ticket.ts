@@ -3,8 +3,8 @@ import { Priority, Status, Type, TicketInt } from '../types/ticket';
 
 const ticketSchema: Schema = new Schema(
 	{
-		title: { type: String, required: true },
-		description: { type: String, required: true },
+		title: { type: String, required: true, maxlength: 70 },
+		description: { type: String, required: true, maxlength: 200 },
 
 		// The Project this role is for
 		projectFrom: {

@@ -9,8 +9,8 @@ const projectSchema: Schema = new Schema(
 			ref: 'User',
 			required: true,
 		},
-		name: { type: String, required: true },
-		description: { type: String, required: true },
+		name: { type: String, required: true, maxlength: 70 },
+		description: { type: String, required: true, maxlength: 200 },
 	},
 	{ timestamps: true }
 );

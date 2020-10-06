@@ -4,7 +4,7 @@ import { TicketAttachmentInt } from '../types/ticketattachment';
 const ticketAttachmentSchema: Schema = new Schema(
 	{
 		fileName: { type: String, required: true },
-		notes: { type: String, required: true },
+		notes: { type: String, required: true, maxlength: 200 },
 
 		// The Ticket ID this comment is for
 		ticketFrom: {

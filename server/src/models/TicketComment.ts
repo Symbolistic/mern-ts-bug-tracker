@@ -3,7 +3,7 @@ import { TicketCommentInt } from '../types/ticketcomment';
 
 const ticketCommentSchema: Schema = new Schema(
 	{
-		comment: { type: String, required: true },
+		comment: { type: String, required: true, maxlength: 200 },
 
 		// The Ticket ID this comment is for
 		ticketFrom: {
