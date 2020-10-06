@@ -1,6 +1,5 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import projectRoutes from './routes/projectRoutes';
 import ticketRoutes from './routes/ticketRoutes';
@@ -15,24 +14,11 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json({ limit: '50mb' })); // This is for attachment uploads
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
 app.use(cookieParser());
 
 // View Engine
 app.set('view engine', 'ejs');
-
-// Production Mode
-if (process.env.NODE_ENV === 'production') {
-	// Set Static Folder
-	app.use(express.static('client/build'));
-
-	// index.html for all page routes
-	app.get('*', (req, res) => {
-		res.sendFile(
-			path.resolve(__dirname, '../../../../client', 'build', 'index.html')
-		);
-	});
-}
 
 // Database Connection
 // URI For the Database
@@ -62,9 +48,21 @@ mongoose
 	.catch((err) => console.log(err));
 
 // Routes
-app.get('*', checkUser);
+//app.get('*', checkUser);
 
 app.use(authRoutes);
 app.use(projectRoutes);
 app.use(ticketRoutes);
 app.use(notificationRoutes);
+
+// Production Mode
+if (process.env.NODE_ENV === 'production') {
+	// Set Static Folder
+	app.use(express.static('client/build'));
+	// index.html for all page routes
+	app.get('*', (req, res) => {
+		res.sendFile(
+			path.resolve(__dirname, '../../../client', 'build', 'index.html')
+		);
+	});
+}

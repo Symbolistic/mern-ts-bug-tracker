@@ -91,6 +91,7 @@ const register_post = async (req: Request, res: Response): Promise<void> => {
 		console.log(`${user.name} has logged in`);
 		res.status(201).json({ user: user._id, isAuthenticated: true });
 	} catch (err) {
+		console.log(err);
 		const errors = handleErrors(err);
 		res.status(400).json({ errors });
 	}
@@ -110,16 +111,21 @@ const login_post = async (req: Request, res: Response) => {
 		console.log(`${user.name} has logged in`);
 		res.status(200).json({ user: user._id, isAuthenticated: true });
 	} catch (err) {
+		console.log(err);
 		const errors = handleErrors(err);
 		res.status(400).json({ errors, isAuthenticated: false });
 	}
 };
 
 const logout_get = (req: Request, res: Response) => {
-	// This will replace the logged in JWT Token with a blank one that expires in 1 millisecond
-	// Basically this will log them out and delete the cookie
-	res.cookie('jwt', '', { maxAge: 1 });
-	res.status(200).json({ user: '', isAuthenticated: false });
+	try {
+		// This will replace the logged in JWT Token with a blank one that expires in 1 millisecond
+		// Basically this will log them out and delete the cookie
+		res.cookie('jwt', '', { maxAge: 1 });
+		res.status(200).json({ user: '', isAuthenticated: false });
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const authenticated = (req: Request, res: Response) => {

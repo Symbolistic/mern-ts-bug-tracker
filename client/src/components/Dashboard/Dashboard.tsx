@@ -36,10 +36,14 @@ export const Dashboard: React.FC<Props> = () => {
 	const authContext = useAuthContext();
 
 	const getChartData = async (userid: string) => {
-		const response = await TicketService.getChartData(userid);
+		try {
+			const response = await TicketService.getChartData(userid);
 
-		if (response.success) {
-			setTicketData(response.tickets);
+			if (response.success) {
+				setTicketData(response.tickets);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 

@@ -2,15 +2,15 @@
 	"name": "mern-ts-jwt",
 	"version": "1.0.0",
 	"description": "",
-	"main": "server/dist/js/src/app.js",
+	"main": "server/dist/src/app.js",
 	"engine": {
 		"node": "12.16.3",
 		"npm": "6.14.4"
 	},
 	"scripts": {
 		"predev": "tsc",
-		"start": "node server/dist/js/src/app.js",
-		"backend": "concurrently \"tsc -w\" \"nodemon server/dist/js/src/app.js\"",
+		"start": "node server/dist/src/app.js",
+		"backend": "concurrently \"tsc -w\" \"nodemon server/dist/src/app.js\"",
 		"frontend": "npm run start --prefix client",
 		"dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
 		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build && npm install --prefix client && npm run build --prefix client",

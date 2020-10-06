@@ -55,7 +55,6 @@ export default {
 		const response = await fetch('/logout', {
 			method: 'GET',
 			headers: {
-				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 		});
@@ -66,7 +65,6 @@ export default {
 		const response = await fetch('/authenticated', {
 			method: 'GET',
 			headers: {
-				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 		});

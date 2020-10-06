@@ -42,11 +42,15 @@ export const Navbar: React.FC<Props> = () => {
 
 	// This is the function that sends a GET Request for the notifications
 	const getNotifications = async (id: string) => {
-		const response = await NotificationService.getNotifications(id);
+		try {
+			const response = await NotificationService.getNotifications(id);
 
-		if (response.success) {
-			setNotifications(response.notifications);
-			setUnread(response.unreadLength);
+			if (response.success) {
+				setNotifications(response.notifications);
+				setUnread(response.unreadLength);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -64,12 +68,14 @@ export const Navbar: React.FC<Props> = () => {
 
 	// Handles the logout functionality
 	const onClickLogoutHandler = () => {
-		AuthService.logout().then((data) => {
-			if (!data.isAuthenticated) {
-				authContext.setUser('');
-				authContext.setIsAuthenticated(false);
-			}
-		});
+		AuthService.logout()
+			.then((data) => {
+				if (!data.isAuthenticated) {
+					authContext.setUser('');
+					authContext.setIsAuthenticated(false);
+				}
+			})
+			.catch((error) => console.log(error));
 	};
 
 	return (

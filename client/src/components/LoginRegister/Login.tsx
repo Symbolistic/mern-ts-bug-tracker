@@ -21,7 +21,6 @@ export const Login: React.FC<IUser> = (props) => {
 
 		AuthService.login(user).then((data) => {
 			const { isAuthenticated, user, errors } = data;
-			console.log(errors);
 
 			if (isAuthenticated) {
 				authContext.setUser(user);
@@ -29,6 +28,7 @@ export const Login: React.FC<IUser> = (props) => {
 				console.log(authContext);
 				props.history.push('/');
 			} else {
+				console.log(errors);
 				setErrors(errors); // Set Error Message to be displayed
 			}
 		});
