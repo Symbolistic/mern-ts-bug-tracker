@@ -605,7 +605,6 @@ const getChartData = async (req: Request, res: Response) => {
 			},
 		};
 
-		console.log(tickets);
 		res.status(200).json({ tickets, success: true });
 	} catch (error) {
 		console.log(error);

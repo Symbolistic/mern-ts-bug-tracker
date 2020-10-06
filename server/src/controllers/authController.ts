@@ -88,6 +88,7 @@ const register_post = async (req: Request, res: Response): Promise<void> => {
 			maxAge: maxAge * 1000,
 			sameSite: true,
 		});
+		console.log(`${user.name} has logged in`);
 		res.status(201).json({ user: user._id, isAuthenticated: true });
 	} catch (err) {
 		const errors = handleErrors(err);
@@ -106,6 +107,7 @@ const login_post = async (req: Request, res: Response) => {
 			maxAge: maxAge * 1000,
 			sameSite: true,
 		});
+		console.log(`${user.name} has logged in`);
 		res.status(200).json({ user: user._id, isAuthenticated: true });
 	} catch (err) {
 		const errors = handleErrors(err);
