@@ -10,6 +10,9 @@ import ProjectService from '../Services/ProjectService';
 interface Props extends RouteComponentProps {}
 
 export const AddProject: React.FC<Props> = (props) => {
+	// Handle error messages
+	const [error, setError] = useState('');
+
 	const [info, setInfo] = useState({ name: '', description: '' });
 	const authContext = useAuthContext();
 
@@ -26,6 +29,12 @@ export const AddProject: React.FC<Props> = (props) => {
 		// If Successful, go back to My Projects Page
 		if (response.projectCreated) {
 			props.history.push('/myprojects');
+		} else {
+			if (response.error.message) {
+				setError(response.errors.message);
+			} else {
+				setError('An unknown error has occured');
+			}
 		}
 	};
 
@@ -45,6 +54,12 @@ export const AddProject: React.FC<Props> = (props) => {
 									<h2>Add Project</h2>
 									<p>Change Project properties and authorized personnel</p>
 								</Grid>
+
+								{error && (
+									<Grid item xs={12} md={12} lg={12}>
+										<h3 className='error'>{error}</h3>
+									</Grid>
+								)}
 
 								<Grid item xs={12} md={6} lg={6}>
 									<h3>Project Name</h3>

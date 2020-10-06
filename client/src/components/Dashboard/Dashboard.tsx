@@ -1,13 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from '../Navbar/Navbar';
 import { Sidebar } from '../Sidebar/Sidebar';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { DoughnutChart } from '../Charts/DoughnutChart';
+import { BarChart } from '../Charts/BarChart';
+import { PieChart } from '../Charts/PieChart';
+import TicketService from '../Services/TicketService';
+import { useAuthContext } from '../Context/AuthContext';
 
 interface Props {}
 
 export const Dashboard: React.FC<Props> = () => {
+	// Hold ticket data
+	const [ticketData, setTicketData] = useState({
+		priority: {
+			low: 0,
+			medium: 0,
+			high: 0,
+		},
+		status: {
+			new: 0,
+			open: 0,
+			inProgress: 0,
+			resolved: 0,
+			additionalInfoReq: 0,
+		},
+		type: {
+			bugsError: 0,
+			featureReq: 0,
+			other: 0,
+			training: 0,
+		},
+	});
+	const authContext = useAuthContext();
+
+	const getChartData = async (userid: string) => {
+		const response = await TicketService.getChartData(userid);
+
+		if (response.success) {
+			setTicketData(response.tickets);
+		}
+	};
+
+	useEffect(() => {
+		getChartData(authContext.user);
+	}, [authContext.user]);
+
 	return (
 		<div id='Dashboard'>
 			<Navbar />
@@ -18,25 +57,31 @@ export const Dashboard: React.FC<Props> = () => {
 				</Grid>
 				<Grid item xs={12} md={10}>
 					<Container className='main-area'>
-						<Grid container spacing={4} alignItems='center' justify='center'>
-							<Grid item xs={12} md={6} lg={4}>
+						<Grid container spacing={2} alignItems='center' justify='center'>
+							<Grid item xs={12} md={6} lg={6}>
 								<div className='chart-card'>
-									<div className='chart'>Chart will be here</div>
-									<h3>Blablabla</h3>
+									<div className='chart'>
+										<BarChart priority={ticketData.priority} />
+									</div>
+									<h3>Tickets by Priority</h3>
 								</div>
 							</Grid>
 
-							<Grid item xs={12} md={6} lg={4}>
+							<Grid item xs={12} md={6} lg={6}>
 								<div className='chart-card'>
-									<div className='chart'>Chart will be here</div>
-									<h3>Blablabla</h3>
+									<div className='chart'>
+										<DoughnutChart type={ticketData.type} />
+									</div>
+									<h3>Tickets by Type</h3>
 								</div>
 							</Grid>
 
-							<Grid item xs={12} md={6} lg={4}>
+							<Grid item xs={12} md={6} lg={6}>
 								<div className='chart-card'>
-									<div className='chart'>Chart will be here</div>
-									<h3>Blablabla</h3>
+									<div className='chart'>
+										<PieChart status={ticketData.status} />
+									</div>
+									<h3>Tickets by Status</h3>
 								</div>
 							</Grid>
 						</Grid>

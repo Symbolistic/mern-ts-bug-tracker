@@ -127,7 +127,7 @@ const getUsers = async (req: Request, res: Response) => {
 		// Now we find all the users in the database and use $nin to NOT INCLUDE users already in our personnel
 		const users = await User.find({
 			email: { $nin: personnel },
-		}).select({ _id: 1, email: 1 });
+		}).select({ _id: 1, name: 1, email: 1 });
 
 		res.status(200).json({ users });
 	} catch (error) {

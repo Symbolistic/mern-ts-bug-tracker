@@ -23,6 +23,9 @@ interface MyLocationState {
 interface Props extends RouteComponentProps<any, any, MyLocationState> {}
 
 export const AddTicket: React.FC<Props> = () => {
+	// Handle error messages
+	const [error, setError] = useState('');
+
 	// This will handle the location and passed down state using the useLocation hook
 	const location = useLocation<MyLocationState>();
 
@@ -52,6 +55,12 @@ export const AddTicket: React.FC<Props> = () => {
 
 		if (response.success) {
 			history.goBack();
+		} else {
+			if (response.error.message) {
+				setError(response.errors.message);
+			} else {
+				setError('An unknown error has occured');
+			}
 		}
 	};
 
@@ -84,6 +93,11 @@ export const AddTicket: React.FC<Props> = () => {
 							</Grid>
 							<form onSubmit={addTicket}>
 								<Grid container spacing={2}>
+									{error && (
+										<Grid item xs={12} md={12} lg={12}>
+											<h3 className='error'>{error}</h3>
+										</Grid>
+									)}
 									<Grid item xs={12} md={6} lg={6}>
 										<h3>Ticket Title</h3>
 										<input

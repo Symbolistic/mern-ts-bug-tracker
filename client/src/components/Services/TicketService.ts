@@ -1,9 +1,8 @@
 export default {
 	addTicket: async (info: object) => {
-		const response = await fetch('http://localhost:8000/addticket', {
+		const response = await fetch('/addticket', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -12,9 +11,8 @@ export default {
 		return data;
 	},
 	getMyTickets: async (id: string) => {
-		const response = await fetch(`http://localhost:8000/mytickets/${id}`, {
+		const response = await fetch(`/mytickets/${id}`, {
 			method: 'GET',
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -23,24 +21,19 @@ export default {
 		return data;
 	},
 	getTicketDetails: async (id: string) => {
-		const response = await fetch(
-			`http://localhost:8000/getticketdetails/${id}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/getticketdetails/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	editTicket: async (info: object) => {
-		const response = await fetch('http://localhost:8000/editticket', {
+		const response = await fetch('/editticket', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -49,10 +42,9 @@ export default {
 		return data;
 	},
 	createTicketComment: async (info: object) => {
-		const response = await fetch('http://localhost:8000/createticketcomment', {
+		const response = await fetch('/createticketcomment', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -61,67 +53,50 @@ export default {
 		return data;
 	},
 	getTicketComments: async (id: string) => {
-		const response = await fetch(
-			`http://localhost:8000/getticketcomments/${id}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/getticketcomments/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	getTicketHistory: async (id: string) => {
-		const response = await fetch(
-			`http://localhost:8000/gettickethistory/${id}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/gettickethistory/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	uploadTicketAttachment: async (info: object) => {
-		const response = await fetch(
-			'http://localhost:8000/uploadticketattachment',
-			{
-				method: 'POST',
-				body: JSON.stringify(info),
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch('/uploadticketattachment', {
+			method: 'POST',
+			body: JSON.stringify(info),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	getTicketAttachments: async (id: string) => {
-		const response = await fetch(
-			`http://localhost:8000/getticketattachments/${id}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/getticketattachments/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	deleteTicket: async (info: object) => {
-		const response = await fetch('http://localhost:8000/deleteticket', {
+		const response = await fetch('/deleteticket', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -130,10 +105,9 @@ export default {
 		return data;
 	},
 	deleteComment: async (info: object) => {
-		const response = await fetch('http://localhost:8000/deletecomment', {
+		const response = await fetch('/deletecomment', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -142,10 +116,19 @@ export default {
 		return data;
 	},
 	deleteAttachment: async (info: object) => {
-		const response = await fetch('http://localhost:8000/deleteattachment', {
+		const response = await fetch('/deleteattachment', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		return data;
+	},
+	getChartData: async (id: string) => {
+		const response = await fetch(`/chartdata/${id}`, {
+			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 			},

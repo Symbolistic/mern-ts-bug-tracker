@@ -14,6 +14,7 @@ import { MyTickets } from './components/MyTickets/MyTickets';
 import { AddTicket } from './components/AddTicket/AddTicket';
 import { EditTicket } from './components/EditTicket/EditTicket';
 import { TicketDetails } from './components/TicketDetails/TicketDetails';
+import { Support } from './components/Support/Support';
 
 function App() {
 	return (
@@ -35,6 +36,7 @@ function App() {
 				<PrivateRoute exact path='/ticketdetails' component={TicketDetails} />
 				<UnPrivateRoute exact path='/login' component={Login} />
 				<UnPrivateRoute exact path='/register' component={Register} />
+				<PrivateRoute exact path='/support' component={Support} />
 			</Switch>
 		</Router>
 	);

@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import { Ticket } from '../models/Ticket';
-import { TicketInt } from '../types/ticket';
+import { Priority, Status, TicketInt, Type } from '../types/ticket';
 import { User } from '../models/User';
 import { ProjectRole } from '../models/ProjectRole';
 import { TicketComment } from '../models/TicketComment';
@@ -514,7 +514,109 @@ const deleteTicketAttachment = async (req: Request, res: Response) => {
 	}
 };
 
+const getChartData = async (req: Request, res: Response) => {
+	try {
+		const { userid } = req.params;
+
+		/* --------------------------Grab each ticket priority--------------------------- */
+
+		const ticketsPriorityLow = await Ticket.find({
+			developerAssignedID: userid,
+			priority: Priority.LOW,
+		});
+		const ticketsPriorityMedium = await Ticket.find({
+			developerAssignedID: userid,
+			priority: Priority.MEDIUM,
+		});
+		const ticketsPriorityHigh = await Ticket.find({
+			developerAssignedID: userid,
+			priority: Priority.HIGH,
+		});
+
+		/* --------------------------Grab each ticket status--------------------------- */
+
+		const ticketsStatusNew = await Ticket.find({
+			developerAssignedID: userid,
+			status: Status.NEW,
+		});
+
+		const ticketsStatusOpen = await Ticket.find({
+			developerAssignedID: userid,
+			status: Status.OPEN,
+		});
+
+		const ticketsStatusInProgress = await Ticket.find({
+			developerAssignedID: userid,
+			status: Status.IN_PROGRESS,
+		});
+
+		const ticketsStatusResolved = await Ticket.find({
+			developerAssignedID: userid,
+			status: Status.RESOLVED,
+		});
+
+		const ticketsStatusAdditionalInfoRequired = await Ticket.find({
+			developerAssignedID: userid,
+			status: Status.ADDITIONAL_INFO_REQUIRED,
+		});
+
+		/* --------------------------Grab each ticket type--------------------------- */
+
+		const ticketsTypeBugs = await Ticket.find({
+			developerAssignedID: userid,
+			type: Type.BUGS_ERROR,
+		});
+
+		const ticketsTypeFeature = await Ticket.find({
+			developerAssignedID: userid,
+			type: Type.FEATURE_REQUEST,
+		});
+
+		const ticketsTypeOther = await Ticket.find({
+			developerAssignedID: userid,
+			type: Type.OTHER_COMMENTS,
+		});
+
+		const ticketsTypeTraining = await Ticket.find({
+			developerAssignedID: userid,
+			type: Type.TRAINING_DOCUMENT_REQUESTS,
+		});
+
+		const tickets = {
+			priority: {
+				low: ticketsPriorityLow.length,
+				medium: ticketsPriorityMedium.length,
+				high: ticketsPriorityHigh.length,
+			},
+
+			status: {
+				new: ticketsStatusNew.length,
+				open: ticketsStatusOpen.length,
+				inProgress: ticketsStatusInProgress.length,
+				resolved: ticketsStatusResolved.length,
+				additionalInfoReq: ticketsStatusAdditionalInfoRequired.length,
+			},
+
+			type: {
+				bugsError: ticketsTypeBugs.length,
+				featureReq: ticketsTypeFeature.length,
+				other: ticketsTypeOther.length,
+				training: ticketsTypeTraining.length,
+			},
+		};
+
+		console.log(tickets);
+		res.status(200).json({ tickets, success: true });
+	} catch (error) {
+		console.log(error);
+		const errors = handleErrors(error);
+		// If Unsuccessful, pass the message
+		res.status(401).json({ errors });
+	}
+};
+
 export {
+	getChartData,
 	addTicket,
 	getMyTickets,
 	getTicketDetails,

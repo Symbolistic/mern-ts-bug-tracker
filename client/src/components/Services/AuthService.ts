@@ -1,9 +1,8 @@
 export default {
 	login: async (user: object) => {
-		const response = await fetch('http://localhost:8000/login', {
+		const response = await fetch('/login', {
 			method: 'POST',
 			body: JSON.stringify(user),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -20,10 +19,9 @@ export default {
 		}
 	},
 	register: async (user: object) => {
-		const response = await fetch('http://localhost:8000/register', {
+		const response = await fetch('/register', {
 			method: 'POST',
 			body: JSON.stringify(user),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -54,9 +52,8 @@ export default {
 			.then((data) => data);
 	},
 	logout: async () => {
-		const response = await fetch('http://localhost:8000/logout', {
+		const response = await fetch('/logout', {
 			method: 'GET',
-			credentials: 'include',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -66,9 +63,8 @@ export default {
 		return data;
 	},
 	isAuthenticated: async () => {
-		const response = await fetch('http://localhost:8000/authenticated', {
+		const response = await fetch('/authenticated', {
 			method: 'GET',
-			credentials: 'include',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',

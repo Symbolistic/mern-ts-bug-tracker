@@ -166,7 +166,9 @@ export const ManageProjectUsers: React.FC<Props> = (props) => {
 											<select multiple onChange={handleUserSelect}>
 												{allUsers.length > 0
 													? allUsers.map((user) => (
-															<option key={user._id}>{user.email}</option>
+															<option key={user._id}>
+																{user.name}: {user.email}
+															</option>
 													  ))
 													: ''}
 											</select>

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+	getChartData,
 	addTicket,
 	editTicket,
 	getMyTickets,
@@ -16,6 +17,10 @@ import {
 
 const router = Router();
 
+// Chart Data
+router.get('/chartdata/:userid', getChartData);
+
+// General Ticket Routes
 router.post('/addticket', addTicket);
 router.get('/mytickets/:userid', getMyTickets);
 router.get('/getticketdetails/:ticketid', getTicketDetails);

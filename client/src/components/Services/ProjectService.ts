@@ -1,9 +1,8 @@
 export default {
 	createProject: async (info: object) => {
-		const response = await fetch('http://localhost:8000/createproject', {
+		const response = await fetch('/createproject', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -12,10 +11,9 @@ export default {
 		return data;
 	},
 	myProjects: async (info: object) => {
-		const response = await fetch('http://localhost:8000/myprojects', {
+		const response = await fetch('/myprojects', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -24,24 +22,19 @@ export default {
 		return data;
 	},
 	getUsers: async (projectid: string) => {
-		const response = await fetch(
-			`http://localhost:8000/getusers/${projectid}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/getusers/${projectid}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	projectPersonnel: async (info: object) => {
-		const response = await fetch('http://localhost:8000/projectpersonnel', {
+		const response = await fetch('/projectpersonnel', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -50,10 +43,9 @@ export default {
 		return data;
 	},
 	assignRole: async (info: object) => {
-		const response = await fetch('http://localhost:8000/assignroles', {
+		const response = await fetch('/assignroles', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -62,38 +54,29 @@ export default {
 		return data;
 	},
 	getProjectData: async (projectid: string) => {
-		const response = await fetch(
-			`http://localhost:8000/getprojectdata/${projectid}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/getprojectdata/${projectid}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	getProjectTickets: async (projectid: string) => {
-		const response = await fetch(
-			`http://localhost:8000/getprojecttickets/${projectid}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+		const response = await fetch(`/getprojecttickets/${projectid}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 		const data = await response.json();
 		return data;
 	},
 	updateProject: async (info: object) => {
-		const response = await fetch('http://localhost:8000/updateproject', {
+		const response = await fetch('/updateproject', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -102,10 +85,9 @@ export default {
 		return data;
 	},
 	deleteProject: async (info: object) => {
-		const response = await fetch('http://localhost:8000/deleteproject', {
+		const response = await fetch('/deleteproject', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -114,10 +96,9 @@ export default {
 		return data;
 	},
 	deletePersonnel: async (info: object) => {
-		const response = await fetch('http://localhost:8000/deletepersonnel', {
+		const response = await fetch('/deletepersonnel', {
 			method: 'POST',
 			body: JSON.stringify(info),
-			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
