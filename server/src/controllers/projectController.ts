@@ -153,9 +153,8 @@ const projectPersonnel = async (req: Request, res: Response) => {
 };
 
 const assignRoles = async (req: Request, res: Response) => {
-	const { userID, projectFrom, users, role } = req.body;
-
 	try {
+		const { userID, projectFrom, users, role } = req.body;
 		const currentUser = await ProjectRole.findOne({
 			user: userID,
 			projectFrom,
@@ -182,6 +181,7 @@ const assignRoles = async (req: Request, res: Response) => {
 			name: 1,
 			email: 1,
 		});
+		console.log(users);
 
 		// Organize the data into an array of objects
 		let batch = usersData.map((user) => {
@@ -326,6 +326,10 @@ const deleteProject = async (req: Request, res: Response) => {
 
 		// If Unsuccessful, throw error
 		if (!deletedProject) throw new Error('Project could not be deleted! 404!');
+
+		const removedPersonnel = await ProjectRole.deleteMany({
+			projectFrom: projectID,
+		});
 
 		// If Successful, pass the successful message
 		res.status(200).json({

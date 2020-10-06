@@ -78,12 +78,22 @@
 	}
 
 	.options {
+		margin-top: 30px;
 		p {
 			font-size: 0.8rem;
+			line-height: 1px;
 		}
 		a {
 			text-decoration: none;
 			color: $paragraphColor;
+			&:hover {
+				color: #f6b93b;
+			}
+		}
+		.demo {
+			text-decoration: none;
+			color: $paragraphColor;
+			transition: all 0.5s ease-in-out;
 			&:hover {
 				color: #f6b93b;
 			}

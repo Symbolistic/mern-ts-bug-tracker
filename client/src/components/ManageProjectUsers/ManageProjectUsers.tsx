@@ -55,7 +55,7 @@ export const ManageProjectUsers: React.FC<Props> = (props) => {
 	useEffect(() => {
 		/* This is an error checker for anyone who directly comes to this page,
 		if they came here without clicking through a project, it will kick them out */
-		if (location?.state?.project) {
+		if (location.state.project) {
 			projectPersonnel(location.state.project);
 			getUsers(location.state.project);
 			console.log(location.state.project);
@@ -67,7 +67,6 @@ export const ManageProjectUsers: React.FC<Props> = (props) => {
 	// This handles the Multi-Select Element for selecting Users
 	const handleUserSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const options = event.target.options;
-
 		/* This creates a shallow array for options because options is a collection
 		of HTML Elements, its not an actual array, so we make it into a shallow copy of an array
 		and then filter out the options that aren't selected, and then map the selected values */
@@ -116,6 +115,7 @@ export const ManageProjectUsers: React.FC<Props> = (props) => {
 			// Call the Assign Role function to POST to backend
 			const response = await ProjectService.assignRole(data);
 			if (response.success) {
+				console.log('test');
 				/* On success update state, we can do this better 
 				later to hit the backend less <-- thats what she said */
 				projectPersonnel(location.state.project);
@@ -166,7 +166,7 @@ export const ManageProjectUsers: React.FC<Props> = (props) => {
 											<select multiple onChange={handleUserSelect}>
 												{allUsers.length > 0
 													? allUsers.map((user) => (
-															<option key={user._id}>
+															<option key={user._id} value={user.email}>
 																{user.name}: {user.email}
 															</option>
 													  ))

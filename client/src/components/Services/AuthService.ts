@@ -78,4 +78,22 @@ export default {
 			};
 		}
 	},
+	demoSignIn: async () => {
+		const response = await fetch('/demologin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (response.status !== 401) {
+			const data = response.json();
+			return data;
+		} else {
+			return {
+				isAuthenticated: false,
+				user: { name: '', email: '', role: '' },
+				message: { msgBody: 'An Error has Occured!', msgError: true },
+			};
+		}
+	},
 };

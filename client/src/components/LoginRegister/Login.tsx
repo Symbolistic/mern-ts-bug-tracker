@@ -34,6 +34,19 @@ export const Login: React.FC<IUser> = (props) => {
 		});
 	};
 
+	const demoSignIn = async () => {
+		const response = await AuthService.demoSignIn();
+		if (response.isAuthenticated) {
+			authContext.setUser(response.user);
+			authContext.setIsAuthenticated(response.isAuthenticated);
+			console.log(authContext);
+			props.history.push('/');
+		} else {
+			console.log(errors);
+			setErrors(errors); // Set Error Message to be displayed
+		}
+	};
+
 	return (
 		<div className='LoginRegister'>
 			<Container>
@@ -73,6 +86,12 @@ export const Login: React.FC<IUser> = (props) => {
 						</form>
 
 						<div className='options'>
+							<p>
+								Sign in as a{' '}
+								<span className='demo' onClick={demoSignIn}>
+									Demo User
+								</span>
+							</p>
 							<p>
 								Create an account? <a href='/register'>Sign Up</a>
 							</p>

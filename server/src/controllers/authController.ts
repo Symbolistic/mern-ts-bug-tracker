@@ -138,6 +138,24 @@ const authenticated = (req: Request, res: Response) => {
 	}
 };
 
+const demo_login = async (req: Request, res: Response) => {
+	try {
+		const user: UserInt = await User.login('Demo@demobug.com', 'demotester123');
+		const token = createToken(user._id);
+		res.cookie('jwt', token, {
+			httpOnly: true,
+			maxAge: maxAge * 1000,
+			sameSite: true,
+		});
+		console.log(`${user.name} has logged in`);
+		res.status(200).json({ user: user._id, isAuthenticated: true });
+	} catch (err) {
+		console.log(err);
+		const errors = handleErrors(err);
+		res.status(400).json({ errors, isAuthenticated: false });
+	}
+};
+
 export {
 	register_get,
 	register_post,
@@ -145,4 +163,5 @@ export {
 	login_post,
 	logout_get,
 	authenticated,
+	demo_login,
 };
