@@ -14,6 +14,8 @@
 		border: 1px solid $black;
 		text-align: center;
 		padding: 20px 0 0 0;
+		overflow: hidden;
+		word-wrap: break-word;
 	}
 
 	select {
