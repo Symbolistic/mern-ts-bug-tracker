@@ -17,7 +17,6 @@ const AuthContext = createContext<IContextValues | undefined>(undefined!);
 function AuthProvider({ children }: AuthProviderProps) {
 	const [user, setUser] = useState('');
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	//const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
 		AuthService.isAuthenticated().then((data) => {
